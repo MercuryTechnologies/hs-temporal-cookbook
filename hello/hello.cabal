@@ -1,0 +1,27 @@
+cabal-version: 3.0
+
+name:           hello
+version:        0.0.0
+license:        MPL-2.0
+build-type:     Simple
+
+common all
+  default-language: GHC2021
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+    base,
+    temporal-sdk
+
+common executables
+
+executable activity
+  import: all
+  main-is: Activity.hs
+
+executable child_workflow
+  import: all
+  main-is: ChildWorkflow.hs
+
+executable cron
+  import: all
+  main-is: Cron.hs
