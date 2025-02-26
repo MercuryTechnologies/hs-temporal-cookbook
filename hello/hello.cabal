@@ -7,16 +7,33 @@ build-type:     Simple
 
 common all
   default-language: GHC2021
+  default-extensions:
+    BlockArguments,
+    DeriveAnyClass,
+    DerivingVia,
+    OverloadedRecordDot,
+    OverloadedStrings,
+    TemplateHaskell,
+    TypeFamilies,
+    UndecidableInstances,
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
     base,
-    temporal-sdk
+    aeson,
+    monad-logger,
+    require-callstack,
+    text,
+    temporal-sdk-core,
+    temporal-sdk,
+    transformers,
+    unliftio,
+    uuid,
 
 common executables
 
-executable activity
+executable activity_with_boilerplate
   import: all
-  main-is: Activity.hs
+  main-is: ActivityWithBoilerplate.hs
 
 executable child_workflow
   import: all
