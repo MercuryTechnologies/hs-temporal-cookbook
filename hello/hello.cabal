@@ -20,6 +20,7 @@ common all
   build-depends:
     base,
     aeson,
+    discover-instances,
     monad-logger,
     require-callstack,
     text,
@@ -30,6 +31,10 @@ common all
     uuid,
 
 common executables
+
+executable activity
+  import: all
+  main-is: Activity.hs
 
 executable activity_with_boilerplate
   import: all

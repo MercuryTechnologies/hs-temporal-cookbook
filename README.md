@@ -8,8 +8,9 @@ Most examples assume a Nix development shell and running Temporal development
 server; see [the usage section](#usage) below for details.
 
 - [hello](./hello) - basic examples
-  - [activity_with_boilerplate](./ActivityWithBoilerplate.hs) - example activity with all the boilerplate and execute it in a workflow
-  - [child_workflow](./hello/ChildWorkflow.hs) - execute a workflow that spawns a child
+  - [activity](./Activity.hs) - define an activity and execute it from a workflow
+  - [activity_with_boilerplate](./ActivityWithBoilerplate.hs) - same as above, without using Template Haskell convenience utilities
+  - [child_workflow](ChildWorkflow.hs) - execute a workflow that spawns a child workflow
   - [cron](./hello/Cron.hs) - execute a workflow once per minute
 
 ## Usage
