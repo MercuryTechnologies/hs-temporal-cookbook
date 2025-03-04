@@ -98,7 +98,7 @@ workerConfig = provideCallStack $ Worker.configure environment definitions setti
       Worker.setLogger (defaultOutput stdout)
 
 main :: IO ()
-main = bracket setup teardown $ \(withClient, worker) -> do
+main = bracket setup teardown $ \(withClient, _) -> do
   workflowId <- WorkflowId . UUID.toText <$> liftIO UUID.V4.nextRandom
   _result <-
     withClient $
@@ -112,12 +112,9 @@ main = bracket setup teardown $ \(withClient, worker) -> do
     setup = do
       runtime <- initializeRuntime NoTelemetry
       coreClient <- connectClient runtime defaultClientConfig
-
       worker <- startWorker coreClient workerConfig
-
       client <- workflowClient coreClient (mkWorkflowClientConfig namespace)
       let withClient action = runReaderT action client
-
       pure (withClient, worker)
 
-    teardown (_withClient, worker) = Worker.shutdown worker
+    teardown (_, worker) = Worker.shutdown worker
