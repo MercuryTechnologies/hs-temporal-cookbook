@@ -14,6 +14,6 @@ runs `Cron.hs`, and so on.
 
 - [activity](./Activity.hs) - define an activity and execute it from a workflow
 - [activity_with_boilerplate](./ActivityWithBoilerplate.hs) - same as above, without using Template Haskell convenience utilities
-- [child_workflow](ChildWorkflow.hs) - execute a workflow that spawns a child workflow
+- [child_workflow](./ChildWorkflow.hs) - execute a workflow that spawns a child workflow
 - [cron](./Cron.hs) - execute a workflow once per minute
 
