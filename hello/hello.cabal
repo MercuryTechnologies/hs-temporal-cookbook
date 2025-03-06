@@ -1,9 +1,12 @@
 cabal-version: 3.0
 
-name:           hello
-version:        0.0.0
-license:        MPL-2.0
-build-type:     Simple
+name:       hello
+version:    0.0.0
+license:    MPL-2.0
+build-type: Simple
+author:     Mercury Technologies Inc.
+maintainer: temporal@mercury.com
+copyright:  2025 Mercury Technologies Inc.
 
 common all
   default-language: GHC2021
