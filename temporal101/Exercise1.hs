@@ -37,22 +37,11 @@ data SayHelloInput = SayHelloInput
   deriving stock (Generic, Show)
   deriving anyclass (FromJSON, ToJSON)
 
--- sayHelloActivity :: SayHelloInput -> Activity () Text
--- sayHelloActivity input = do
---   pure $ "Hello, " <> input.name
-
--- Temporal.TH.registerActivity 'sayHelloActivity
--- Temporal.TH.bringRegisteredTemporalFunctionsIntoScope
-
--- activityOptions :: Workflow.StartActivityOptions
--- activityOptions = Workflow.defaultStartActivityOptions (Workflow.StartToClose $ seconds 1)
-
 -- | We don't execute an activity in this workflow, we execute code
 -- directly (why?).
 sayHelloWorkflow :: SayHelloInput -> Workflow Text
 sayHelloWorkflow input = provideCallStack do
   pure $ "Hello, " <> input.name
-  -- Workflow.executeActivity SayHelloActivity activityOptions input
 
 Temporal.TH.registerWorkflow 'sayHelloWorkflow
 Temporal.TH.bringRegisteredTemporalFunctionsIntoScope
