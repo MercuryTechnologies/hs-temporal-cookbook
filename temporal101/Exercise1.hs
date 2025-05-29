@@ -75,7 +75,7 @@ main = bracket setup teardown $ \_worker -> do
       runtime <- initializeRuntime NoTelemetry
       -- coreClient is needed to construct a worker, even though we're
       -- not constructing a client
-      coreClient <- connectClient runtime defaultClientConfig
+      coreClient <- runStdoutLoggingT $ connectClient runtime defaultClientConfig
 
       -- startWorker starts a Temporal worker and returns a handle to
       -- it. the Temporal control plane can dispatch to the worker, or
