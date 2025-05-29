@@ -68,8 +68,7 @@ main = bracket setup teardown $ \_worker -> do
   -- the worker's running in its own thread, we just have to keep this
   -- one alive (one one-second threadDelay at a time) for as long as we
   -- want to execute workflows on it
-  forever $ threadDelay 1_000_000
-  pure ()
+  forever $ threadDelay maxBound
   where
     setup = do
       runtime <- initializeRuntime NoTelemetry
