@@ -1,7 +1,7 @@
 module Main where
 
 import Control.Monad.IO.Class (liftIO)
-import Control.Monad.Logger (defaultOutput)
+import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
 import Control.Monad.Trans.Reader (runReaderT)
 import Data.Aeson (FromJSON, ToJSON)
 import Data.Text (Text)
@@ -122,7 +122,7 @@ main = bracket setup teardown $ \(withClient, worker) -> do
   where
     setup = do
       runtime <- initializeRuntime NoTelemetry
-      coreClient <- connectClient runtime defaultClientConfig
+      coreClient <- runStdoutLoggingT $ connectClient runtime defaultClientConfig
 
       worker <- startWorker coreClient workerConfig
 
