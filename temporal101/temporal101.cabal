@@ -1,0 +1,40 @@
+cabal-version: 3.0
+
+name:       temporal101
+version:    0.0.0
+license:    MPL-2.0
+build-type: Simple
+author:     Mercury Technologies Inc.
+maintainer: temporal@mercury.com
+copyright:  2025 Mercury Technologies Inc.
+
+common all
+  default-language: GHC2021
+  default-extensions:
+    BlockArguments,
+    DeriveAnyClass,
+    DerivingVia,
+    OverloadedRecordDot,
+    OverloadedStrings,
+    TemplateHaskell,
+    TypeFamilies,
+    UndecidableInstances,
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+    base,
+    aeson,
+    discover-instances,
+    monad-logger,
+    require-callstack,
+    text,
+    temporal-sdk-core,
+    temporal-sdk,
+    transformers,
+    unliftio,
+    uuid,
+
+common executables
+
+executable exercise1
+  import: all
+  main-is: Exercise1.hs
