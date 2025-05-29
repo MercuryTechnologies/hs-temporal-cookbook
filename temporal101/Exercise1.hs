@@ -2,7 +2,7 @@ module Main where
 
 import Control.Monad (forever)
 import Control.Monad.IO.Class (liftIO)
-import Control.Monad.Logger (defaultOutput)
+import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
 import Control.Monad.Trans.Reader (runReaderT)
 import Data.Aeson (FromJSON, ToJSON)
 import Data.Text (Text)
