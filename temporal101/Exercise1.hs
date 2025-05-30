@@ -3,28 +3,22 @@ module Main where
 import Control.Monad (forever)
 import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
-import Control.Monad.Trans.Reader (runReaderT)
-import Data.Text (Text)
 import DiscoverInstances (discoverInstances)
 import RequireCallStack (RequireCallStack, provideCallStack)
 import SayHello
 import System.IO (stdout)
 import Temporal.Client (mkWorkflowClientConfig, workflowClient)
-import Temporal.Client qualified as Client
 import Temporal.Core.Client (connectClient, defaultClientConfig)
-import Temporal.Duration (seconds)
-import Temporal.Payload (JSON (JSON))
 import Temporal.Runtime (TelemetryOptions (..), initializeRuntime)
+-- WorkflowFn and ActivityFn are used implicitly in the
+-- discoverInstances calls in workerConfig
 import Temporal.TH (WorkflowFn, ActivityFn)
 import Temporal.TH qualified
 import Temporal.Worker (Worker, WorkerConfig, startWorker)
 import Temporal.Worker qualified as Worker
-import Temporal.Workflow (Workflow, WorkflowId (..))
 import Temporal.Workflow qualified as Workflow
 import UnliftIO.Concurrent (threadDelay)
 import UnliftIO.Exception (bracket)
-
--- Temporal.TH.bringRegisteredTemporalFunctionsIntoScope
 
 taskQueue :: Workflow.TaskQueue
 taskQueue = "hello-world"
