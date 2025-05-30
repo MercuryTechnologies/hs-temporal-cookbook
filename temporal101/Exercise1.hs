@@ -29,7 +29,14 @@ namespace = "default"
 workerConfig :: WorkerConfig ()
 workerConfig = provideCallStack $ Worker.configure environment definitions settings
   where
+    -- we provide an empty (that is, @()@) environment. in a more
+    -- complex application this could provide a connection pool, or a
+    -- redis cache, or something like that
     environment = ()
+    -- the template haskell here is guided by the type of the
+    -- environment we provide; here, it's @()@ again. we will only
+    -- discover definitions that are defined on this particular
+    -- environment type.
     definitions :: RequireCallStack => Worker.Definitions ()
     definitions = Temporal.TH.discoverDefinitions @() $$(discoverInstances) $$(discoverInstances)
     settings = do
