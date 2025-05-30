@@ -21,7 +21,7 @@ import UnliftIO.Concurrent (threadDelay)
 import UnliftIO.Exception (bracket)
 
 taskQueue :: Workflow.TaskQueue
-taskQueue = "hello-worker"
+taskQueue = "hello-world"
 
 namespace :: Workflow.Namespace
 namespace = "default"
