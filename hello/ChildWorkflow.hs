@@ -90,8 +90,8 @@ workerConfig :: WorkerConfig ()
 workerConfig = provideCallStack $ Worker.configure environment definitions settings
   where
     environment = ()
-    definitions :: (RequireCallStack) => Worker.Definitions ()
-    definitions = Temporal.TH.discoverDefinitions @() $$(discoverInstances) $$(discoverInstances)
+    definitions :: RequireCallStack => Worker.Definitions ()
+    definitions = Temporal.TH.discoverDefinitions $$(discoverInstances) $$(discoverInstances)
     settings = do
       Worker.setNamespace namespace
       Worker.setTaskQueue taskQueue
