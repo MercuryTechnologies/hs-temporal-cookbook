@@ -29,9 +29,15 @@ namespace = "default"
 workerConfig :: WorkerConfig ()
 workerConfig = provideCallStack $ Worker.configure environment definitions settings
   where
-    -- we provide an empty (that is, @()@) environment. in a more
-    -- complex application this could provide a connection pool, or a
-    -- redis cache, or something like that
+    -- workers are configured with an environment, which is made
+    -- available to activities at execution-time.
+    --
+    -- the workflow in this exercise has no activities, and so we
+    -- configure its workers with an empty environment (that is, '()').
+    --
+    -- in a more complex deployment, workers would configure database
+    -- connection pools, shared secrets, etc. at initialization so that
+    -- activities could make use of them.
     environment = ()
     -- the template haskell here is guided by the type of the
     -- environment we provide; here, it's @()@ again. we will only
