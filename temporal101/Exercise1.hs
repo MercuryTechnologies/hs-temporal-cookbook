@@ -4,15 +4,11 @@ import Control.Monad (forever)
 import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
 import Control.Monad.Trans.Reader (runReaderT)
-import Data.Aeson (FromJSON, ToJSON)
 import Data.Text (Text)
-import Data.UUID qualified as UUID
-import Data.UUID.V4 qualified as UUID.V4
 import DiscoverInstances (discoverInstances)
-import GHC.Generics (Generic)
 import RequireCallStack (RequireCallStack, provideCallStack)
+import SayHello
 import System.IO (stdout)
-import Temporal.Activity (Activity)
 import Temporal.Client (mkWorkflowClientConfig, workflowClient)
 import Temporal.Client qualified as Client
 import Temporal.Core.Client (connectClient, defaultClientConfig)
@@ -28,23 +24,7 @@ import Temporal.Workflow qualified as Workflow
 import UnliftIO.Concurrent (threadDelay)
 import UnliftIO.Exception (bracket)
 
--- | The official "Hello, Workflow" example takes a bare string as input.
--- Here we reinforce the pattern of creating a record type for inputs so
--- that it can evolve freely.
-data SayHelloInput = SayHelloInput
-  { name :: Text
-  }
-  deriving stock (Generic, Show)
-  deriving anyclass (FromJSON, ToJSON)
-
--- | We don't execute an activity in this workflow, we execute code
--- directly (why?).
-sayHelloWorkflow :: SayHelloInput -> Workflow Text
-sayHelloWorkflow input = provideCallStack do
-  pure $ "Hello, " <> input.name
-
-Temporal.TH.registerWorkflow 'sayHelloWorkflow
-Temporal.TH.bringRegisteredTemporalFunctionsIntoScope
+-- Temporal.TH.bringRegisteredTemporalFunctionsIntoScope
 
 taskQueue :: Workflow.TaskQueue
 taskQueue = "hello-world"

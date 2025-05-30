@@ -22,18 +22,17 @@ workflows against workers you write.
 ### A note on exercise format
 
 These exercises are structured slightly differently from the exercises
-in the official courses. They're meant to mirror the
-one-file-per-example structure of the examples in `hello/`, and they
-follow the pattern of structuring input with a type (rather than, say, a
-string) which Mercury uses as a best practice.
+in the official courses. They follow the pattern of structuring input
+with a type (rather than, say, a string) which Mercury uses as a best
+practice.
 
 ## Exercise 1: Build a simple worker and workflow
 
 ### Part A: Review the workflow and worker logic
 
-Inspect `Exercise1.hs` and find the definition of `sayHelloWorkflow`.
-Review its type signature. Next, review the `main` function and its
-pattern for creating and tearing down a worker.
+Inspect `SayHello.hs` and find the definition of `sayHelloWorkflow`.
+Review its type signature. Next, review the `main` function in
+`Exercise1.hs` and its pattern for creating and tearing down a worker.
 
 ### Part B: Change the task queue name for the worker
 
@@ -54,13 +53,14 @@ command to instruct the Temporal server to run your workflow:
 
 ```bash
 $ temporal workflow start \
-    --type Main.sayHelloWorkflow \
+    --type SayHello.sayHelloWorkflow \
     --task-queue greeting-tasks \
     --workflow-id my-first-workflow \
     --input '{"name": "<your name here>"}'
 ```
 
-Note that the Haskell module (`Main`) is part of the workflow type name.
+Note that the Haskell module where the workflow is defined (`SayHello`)
+is part of the workflow type name.
 
 ### Part E: View the workflow's status and output
 
