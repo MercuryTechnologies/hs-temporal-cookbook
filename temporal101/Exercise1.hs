@@ -38,7 +38,7 @@ workerConfig = provideCallStack $ Worker.configure environment definitions setti
     -- discover definitions that are defined on this particular
     -- environment type.
     definitions :: RequireCallStack => Worker.Definitions ()
-    definitions = Temporal.TH.discoverDefinitions @() $$(discoverInstances) $$(discoverInstances)
+    definitions = Temporal.TH.discoverDefinitions $$(discoverInstances) $$(discoverInstances)
     settings = do
       Worker.setNamespace namespace
       Worker.setTaskQueue taskQueue
@@ -47,8 +47,7 @@ workerConfig = provideCallStack $ Worker.configure environment definitions setti
 main :: IO ()
 main = bracket setup teardown $ \_worker -> do
   -- the worker's running in its own thread, we just have to keep this
-  -- one alive (one one-second threadDelay at a time) for as long as we
-  -- want to execute workflows on it
+  -- one alive jfor as long as we want to execute workflows on it
   forever $ threadDelay maxBound
   where
     setup = do
