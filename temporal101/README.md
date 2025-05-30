@@ -28,6 +28,8 @@ practice.
 
 ## Exercise 1: Build a simple worker and workflow
 
+Ensure that you're running a Temporal server.
+
 ### Part A: Review the workflow and worker logic
 
 Inspect `SayHello.hs` and find the definition of `sayHelloWorkflow`.
@@ -76,3 +78,46 @@ You can examine the workflow's execution in a web interface, too. In a
 browser, open `localhost:8233` and click into the workflow you just ran.
 If you made a mistake in the inputs, this will make it easier to
 diagnose than reading the log output of the worker in the terminal.
+
+## Exercise 2: Start a workflow programmatically
+
+Ensure that you're running a Temporal server.
+
+### Part A: Review the client logic
+
+Read through `Exercise2.hs`. Compare its `main` function to that of
+`Exercise1.hs`.
+
+### Part B: Launch the worker and execute the workflow
+
+Run your worker from exercise 1 again:
+
+```bash
+$ cabal run temporal101:exercise1
+```
+
+In another terminal (in the nix shell), build and run exercise 2:
+
+```bash
+$ cabal run temporal101:exercise2
+```
+
+This will hang. Don't panic, leave it running.
+
+### Part C: Inspect the running workflow
+
+Open a web browser to `localhost:8233` and inspect the workflow you just
+launched (it'll have a uuid for its workflow ID). You'll notice a status
+like "no workers available for task queue `hello-worker`".
+
+### Part D: Rename the worker's task queue to match
+
+Ctrl-C the worker (`temporal101:exercise1`) and rename its task que to
+`"hello-worker"`. Run it again:
+
+```bash
+$ cabal run temporal101:exercise1
+```
+
+You should see `exercise2` terminate and the workflow complete in the
+Temporal web UI.
