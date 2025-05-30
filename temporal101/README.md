@@ -112,8 +112,8 @@ like "no workers available for task queue `hello-worker`".
 
 ### Part D: Rename the worker's task queue to match
 
-Ctrl-C the worker (`temporal101:exercise1`) and rename its task que to
-`"hello-worker"`. Run it again:
+Ctrl-C the worker (`temporal101:exercise1`) and rename its task queue
+(in `Exercise1.hs`) to `"hello-worker"`. Run it again:
 
 ```bash
 $ cabal run temporal101:exercise1
