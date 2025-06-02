@@ -4,8 +4,9 @@ import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
 import Control.Monad.Trans.Reader (runReaderT)
 import Data.Aeson (FromJSON, ToJSON)
-import Data.ByteString.Char8 qualified as BS
-import Data.Text (pack, unpack, Text)
+import Data.Text (Text)
+import Data.Text qualified as Text
+import Data.Text.Encoding (decodeUtf8)
 import Data.UUID qualified as UUID
 import Data.UUID.V4 qualified as UUID.V4
 import DiscoverInstances (discoverInstances)
@@ -39,9 +40,9 @@ data ActivityInput = ActivityInput
 -- which remains @()@.
 getSpanishGreeting :: ActivityInput -> Activity () Text
 getSpanishGreeting input = do
-  req <- parseRequest . unpack $ "http://localhost:9001/hello/" <> input.name
+  req <- parseRequest . Text.unpack $ "http://localhost:9001/hello/" <> input.name
   resp <- httpBS req
-  pure . pack . BS.unpack $ getResponseBody resp
+  pure . decodeUtf8 $ getResponseBody resp
 
 Temporal.TH.registerActivity 'getSpanishGreeting
 
