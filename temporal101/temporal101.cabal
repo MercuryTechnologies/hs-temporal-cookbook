@@ -22,10 +22,13 @@ common all
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
     base,
+    bytestring,
     aeson,
     discover-instances,
+    http-conduit,
     monad-logger,
     require-callstack,
+    scotty,
     text,
     temporal-sdk-core,
     temporal-sdk,
@@ -45,3 +48,11 @@ executable exercise2
   import: all
   main-is: Exercise2.hs
   other-modules: SayHello
+
+executable exercise3
+  import: all
+  main-is: Exercise3.hs
+
+executable helloserver
+  import: all
+  main-is: HelloServer.hs

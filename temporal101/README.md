@@ -123,3 +123,69 @@ $ cabal run temporal101:exercise1
 
 You should see `exercise2` terminate and the workflow complete in the
 Temporal web UI.
+
+## Service Workflow Demo
+
+To invoke operations with side effects, we need to run an Activity. This
+demo defines an Activity in `Exercise3.hs` (spoiler warning) that calls
+a local HTTP service to obtain a Spanish greeting for a specified name.
+The same Haskell file also defines a Workflow to call the Activity, a
+worker, and a client that invokes the workflow.
+
+Inspect `Exercise3.hs` before continuing.
+
+### Part A: Run the service
+
+In a terminal in the nix shell, run:
+
+```bash
+$ cabal run temporal101:helloserver
+```
+
+### Part B: Run the workflow
+
+In another terminal, run:
+
+```bash
+$ cabal run temporal101:exercise3
+```
+
+### Part C: Inspect the results
+
+In a web browser, visit `localhost;8233` and examine the workflow you
+just invoked.
+
+## Exercise 3: Farewell Workflow
+
+`HelloServer` has a `/goodbye` endpoint as well as a `/hello` endpoint.
+We're going to write an activity to call it.
+
+### Part A: Create a new activity
+
+Open `Exercise3.hs` and copy the `getSpanishGreeting` activity to
+something like `getSpanishFarewell`. Change it to call the `/goodbye`
+endpoint instead of `/hello`. Register it with
+`Temporal.TH.registerActivity`.
+
+### Part B: Change the workflow to call your new activity
+
+Change `greetingWorkflow` to execute the new activity you created.
+
+### Part C: Run the greeting service and the workflow
+
+In one terminal in the nix shell, run:
+
+```bash
+$ cabal run temporal101:helloserver
+```
+
+In another, run:
+
+```bash
+$ cabal run temporal101:exercise3
+```
+
+### Part D: Inspect the results
+
+Open a web browser to `localhost:8233`. Find the workflow that just ran
+and inspect the results. Verify that it called the correct endpoint.
