@@ -28,6 +28,7 @@ namespace = "default"
 main :: IO ()
 main = bracket setup teardown $ \(withClient) -> do
   workflowId <- WorkflowId . UUID.toText <$> liftIO UUID.V4.nextRandom
+  putStrLn "Starting workflow..."
   _result <-
     withClient $
       Client.execute
@@ -41,11 +42,11 @@ main = bracket setup teardown $ \(withClient) -> do
       runtime <- initializeRuntime NoTelemetry
       coreClient <- runStdoutLoggingT $ connectClient runtime defaultClientConfig
 
-      -- 'Client.execute' expects a context with @HasWorkflowClient@; for the
-      -- sake of example, we can provide that here with a simple wrapper. 
+      -- 'Client.execute' expects a context with @HasWorkflowClient@,
+      -- and the SDK provides an instance for @ReaderT WorkflowClient m@.
       client <- workflowClient coreClient (mkWorkflowClientConfig namespace)
       let withClient action = runReaderT action client
 
       pure withClient
 
-    teardown (_withClient) = pure ()
+    teardown _withClient = pure ()

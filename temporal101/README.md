@@ -62,7 +62,9 @@ $ temporal workflow start \
 ```
 
 Note that the Haskell module where the workflow is defined (`SayHello`)
-is part of the workflow type name.
+is part of the workflow type name. This is provided by the Template
+Haskell helpers; if you manually define a workflow it won't have this
+annotation by default.
 
 ### Part E: View the workflow's status and output
 

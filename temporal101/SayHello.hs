@@ -24,4 +24,3 @@ sayHelloWorkflow input = provideCallStack do
   pure $ "Hello, " <> input.name
 
 Temporal.TH.registerWorkflow 'sayHelloWorkflow
--- Temporal.TH.bringRegisteredTemporalFunctionsIntoScope

@@ -5,6 +5,7 @@ import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
 import DiscoverInstances (discoverInstances)
 import RequireCallStack (RequireCallStack, provideCallStack)
+-- SayHello imports our workflow definition
 import SayHello
 import System.IO (stdout)
 import Temporal.Client (mkWorkflowClientConfig, workflowClient)
