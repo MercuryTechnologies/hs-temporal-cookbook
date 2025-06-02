@@ -3,48 +3,23 @@ module Main where
 import Control.Monad (forever)
 import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
-import Control.Monad.Trans.Reader (runReaderT)
-import Data.Aeson (FromJSON, ToJSON)
-import Data.Text (Text)
-import Data.UUID qualified as UUID
-import Data.UUID.V4 qualified as UUID.V4
 import DiscoverInstances (discoverInstances)
-import GHC.Generics (Generic)
 import RequireCallStack (RequireCallStack, provideCallStack)
+-- SayHello imports our workflow definition
+import SayHello
 import System.IO (stdout)
-import Temporal.Activity (Activity)
 import Temporal.Client (mkWorkflowClientConfig, workflowClient)
-import Temporal.Client qualified as Client
 import Temporal.Core.Client (connectClient, defaultClientConfig)
-import Temporal.Duration (seconds)
-import Temporal.Payload (JSON (JSON))
 import Temporal.Runtime (TelemetryOptions (..), initializeRuntime)
+-- WorkflowFn and ActivityFn are used implicitly in the
+-- discoverInstances calls in workerConfig
 import Temporal.TH (WorkflowFn, ActivityFn)
 import Temporal.TH qualified
 import Temporal.Worker (Worker, WorkerConfig, startWorker)
 import Temporal.Worker qualified as Worker
-import Temporal.Workflow (Workflow, WorkflowId (..))
 import Temporal.Workflow qualified as Workflow
 import UnliftIO.Concurrent (threadDelay)
 import UnliftIO.Exception (bracket)
-
--- | The official "Hello, Workflow" example takes a bare string as input.
--- Here we reinforce the pattern of creating a record type for inputs so
--- that it can evolve freely.
-data SayHelloInput = SayHelloInput
-  { name :: Text
-  }
-  deriving stock (Generic, Show)
-  deriving anyclass (FromJSON, ToJSON)
-
--- | We don't execute an activity in this workflow, we execute code
--- directly (why?).
-sayHelloWorkflow :: SayHelloInput -> Workflow Text
-sayHelloWorkflow input = provideCallStack do
-  pure $ "Hello, " <> input.name
-
-Temporal.TH.registerWorkflow 'sayHelloWorkflow
-Temporal.TH.bringRegisteredTemporalFunctionsIntoScope
 
 taskQueue :: Workflow.TaskQueue
 taskQueue = "hello-world"
@@ -55,7 +30,20 @@ namespace = "default"
 workerConfig :: WorkerConfig ()
 workerConfig = provideCallStack $ Worker.configure environment definitions settings
   where
+    -- workers are configured with an environment, which is made
+    -- available to activities at execution-time.
+    --
+    -- the workflow in this exercise has no activities, and so we
+    -- configure its workers with an empty environment (that is, '()').
+    --
+    -- in a more complex deployment, workers would configure database
+    -- connection pools, shared secrets, etc. at initialization so that
+    -- activities could make use of them.
     environment = ()
+    -- the template haskell here is guided by the type of the
+    -- environment we provide; here, it's @()@ again. we will only
+    -- discover definitions that are defined on this particular
+    -- environment type.
     definitions :: RequireCallStack => Worker.Definitions ()
     definitions = Temporal.TH.discoverDefinitions $$(discoverInstances) $$(discoverInstances)
     settings = do
@@ -66,8 +54,7 @@ workerConfig = provideCallStack $ Worker.configure environment definitions setti
 main :: IO ()
 main = bracket setup teardown $ \_worker -> do
   -- the worker's running in its own thread, we just have to keep this
-  -- one alive (one one-second threadDelay at a time) for as long as we
-  -- want to execute workflows on it
+  -- one alive jfor as long as we want to execute workflows on it
   forever $ threadDelay maxBound
   where
     setup = do

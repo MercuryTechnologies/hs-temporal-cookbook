@@ -22,18 +22,19 @@ workflows against workers you write.
 ### A note on exercise format
 
 These exercises are structured slightly differently from the exercises
-in the official courses. They're meant to mirror the
-one-file-per-example structure of the examples in `hello/`, and they
-follow the pattern of structuring input with a type (rather than, say, a
-string) which Mercury uses as a best practice.
+in the official courses. They follow the pattern of structuring input
+with a type (rather than, say, a string) which Mercury uses as a best
+practice.
 
 ## Exercise 1: Build a simple worker and workflow
 
+Ensure that you're running a Temporal server.
+
 ### Part A: Review the workflow and worker logic
 
-Inspect `Exercise1.hs` and find the definition of `sayHelloWorkflow`.
-Review its type signature. Next, review the `main` function and its
-pattern for creating and tearing down a worker.
+Inspect `SayHello.hs` and find the definition of `sayHelloWorkflow`.
+Review its type signature. Next, review the `main` function in
+`Exercise1.hs` and its pattern for creating and tearing down a worker.
 
 ### Part B: Change the task queue name for the worker
 
@@ -54,13 +55,16 @@ command to instruct the Temporal server to run your workflow:
 
 ```bash
 $ temporal workflow start \
-    --type Main.sayHelloWorkflow \
+    --type SayHello.sayHelloWorkflow \
     --task-queue greeting-tasks \
     --workflow-id my-first-workflow \
     --input '{"name": "<your name here>"}'
 ```
 
-Note that the Haskell module (`Main`) is part of the workflow type name.
+Note that the Haskell module where the workflow is defined (`SayHello`)
+is part of the workflow type name. This is provided by the Template
+Haskell helpers; if you manually define a workflow it won't have this
+annotation by default.
 
 ### Part E: View the workflow's status and output
 
@@ -76,3 +80,46 @@ You can examine the workflow's execution in a web interface, too. In a
 browser, open `localhost:8233` and click into the workflow you just ran.
 If you made a mistake in the inputs, this will make it easier to
 diagnose than reading the log output of the worker in the terminal.
+
+## Exercise 2: Start a workflow programmatically
+
+Ensure that you're running a Temporal server.
+
+### Part A: Review the client logic
+
+Read through `Exercise2.hs`. Compare its `main` function to that of
+`Exercise1.hs`.
+
+### Part B: Launch the worker and execute the workflow
+
+Run your worker from exercise 1 again:
+
+```bash
+$ cabal run temporal101:exercise1
+```
+
+In another terminal (in the nix shell), build and run exercise 2:
+
+```bash
+$ cabal run temporal101:exercise2
+```
+
+This will hang. Don't panic, leave it running.
+
+### Part C: Inspect the running workflow
+
+Open a web browser to `localhost:8233` and inspect the workflow you just
+launched (it'll have a uuid for its workflow ID). You'll notice a status
+like "no workers available for task queue `hello-worker`".
+
+### Part D: Rename the worker's task queue to match
+
+Ctrl-C the worker (`temporal101:exercise1`) and rename its task queue
+(in `Exercise1.hs`) to `"hello-worker"`. Run it again:
+
+```bash
+$ cabal run temporal101:exercise1
+```
+
+You should see `exercise2` terminate and the workflow complete in the
+Temporal web UI.
