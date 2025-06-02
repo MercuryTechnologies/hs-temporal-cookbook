@@ -123,3 +123,34 @@ $ cabal run temporal101:exercise1
 
 You should see `exercise2` terminate and the workflow complete in the
 Temporal web UI.
+
+## Service Workflow Demo
+
+To invoke operations with side effects, we need to run an Activity. This
+demo defines an Activity in `Exercise3.hs` (spoiler warning) that calls
+a local HTTP service to obtain a Spanish greeting for a specified name.
+The same Haskell file also defines a Workflow to call the Activity, a
+worker, and a client that invokes the workflow.
+
+Inspect `Exercise3.hs` before continuing.
+
+### Part A: Run the service
+
+In a terminal in the nix shell, run:
+
+```bash
+$ cabal run temporal101:helloserver
+```
+
+### Part B: Run the workflow
+
+In another terminal, run:
+
+```bash
+$ cabal run temporal101:exercise3
+```
+
+### Part C: Inspect the results
+
+In a web browser, visit `localhost;8233` and examine the workflow you
+just invoked.
