@@ -39,13 +39,11 @@ data ActivityInput = ActivityInput
 -- which remains @()@.
 getSpanishGreeting :: ActivityInput -> Activity () Text
 getSpanishGreeting input = do
-  -- resp <- httpBS . parseRequest . unpack $ "http://localhost:9001/hello/" <> input.name
   req <- parseRequest . unpack $ "http://localhost:9001/hello/" <> input.name
   resp <- httpBS req
   pure . pack . BS.unpack $ getResponseBody resp
 
 Temporal.TH.registerActivity 'getSpanishGreeting
--- Temporal.TH.bringRegisteredTemporalFunctionsIntoScope
 
 -- | Workflow configuration options for this example 'Activity'; the only
 -- non-default constraint we specify is that execution may last no longer than
@@ -64,7 +62,6 @@ greetingWorkflow input = provideCallStack do
   Workflow.executeActivity GetSpanishGreeting activityOptions input
 
 Temporal.TH.registerWorkflow 'greetingWorkflow
--- Temporal.TH.bringRegisteredTemporalFunctionsIntoScope
 
 taskQueue :: Workflow.TaskQueue
 taskQueue = "activity-task-queue"
