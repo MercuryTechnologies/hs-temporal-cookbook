@@ -42,6 +42,7 @@
                     act
                     cabal-install
                     ghcid
+                    openjdk
                     ormolu
                     temporal-cli
                   ];
