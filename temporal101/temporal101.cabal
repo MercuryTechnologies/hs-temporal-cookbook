@@ -56,3 +56,7 @@ executable exercise3
 executable helloserver
   import: all
   main-is: HelloServer.hs
+
+executable exercise4
+  import: all
+  main-is: Exercise4.hs

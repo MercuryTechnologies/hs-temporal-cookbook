@@ -189,3 +189,39 @@ $ cabal run temporal101:exercise3
 
 Open a web browser to `localhost:8233`. Find the workflow that just ran
 and inspect the results. Verify that it called the correct endpoint.
+
+## Exercise 4: Multiple implementation platforms
+
+In this exercise, we define a workflow (and a worker to run it) in
+Haskell, and use it to invoke an activity that's implemented in Java
+(with a worker to run it) and provided in an opaque `.jar` file.
+
+### Part A: Inspect the Haskell
+
+Open `Exercise4.hs` and note how it references the `CreatePdf` activity.
+Beyond the use of `KnownActivity`, the rest of the workflow and worker
+machinery should look familiar. Change the name in the `CreatePdfInput`
+constructor to your own.
+
+### Part B: Start the Java worker
+
+In a terminal in the nix shell, run:
+
+```bash
+$ java -classpath java-activity-and-worker.jar io.temporal.training.PdfCertWorker
+```
+### Part C: Run the Haskell worker
+
+In another terminal, run:
+
+```bash
+$ cabal run temporal101:exercise4
+```
+
+### Part D: Inspect the fruits of your labor
+
+Open a web browser to `localhost:8233` and examine the execution of the
+workflow you just ran.
+
+In the `temporal101` directory, you should find a PDF. Open that in the
+web browser and enjoy.
