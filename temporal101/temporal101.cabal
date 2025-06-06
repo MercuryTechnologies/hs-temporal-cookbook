@@ -61,3 +61,7 @@ executable helloserver
 executable exercise4
   import: all
   main-is: Exercise4.hs
+
+executable retrypolicy
+  import: all
+  main-is: RetryPolicy.hs
