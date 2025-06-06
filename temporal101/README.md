@@ -225,3 +225,43 @@ workflow you just ran.
 
 In the `temporal101` directory, you should find a PDF. Open that in the
 web browser and enjoy.
+
+## Extra Study: Retry policies
+
+Part of Temporal's value proposition is durable execution in the face of
+temporary failure. Let's look at an example, based around an artificial
+failure on one of `HelloServer`'s endpoints.
+
+### Part A: Inspect the Haskell
+
+Open `RetryPolicy.hs` and note how the activity throws an
+`ApplicationFailure` to signal its failure. Note also the retry policy
+we configure to run the activity.
+
+### Part B: Run the code as-is and examine the failed workflow
+
+In a terminal in the nix shell, run the http service:
+
+```bash
+$ cabal run temporal101:helloserver
+```
+
+In another terminal, run the retry worker:
+
+```bash
+$ cabal run temporal101:retrypolicy
+```
+
+Once the latter has completed, open a web browser to `localhost:8233`
+and examine the failed workflow. Note that it's annotated with the
+number of retries and other metadata about the retry policy in use.
+
+### Part C: Set an improved retry policy
+
+Examine `HelloServer.hs`, then update the `retryPolicy` in
+`RetryPolicy.hs` to something you'd expect to succeed.
+
+### Part D: Rerun the experiment and examine the results
+
+If it's still running, ctrl-C out of `helloserver` and start it again.
+Run the retry worker again, and examine the results in the web UI.
