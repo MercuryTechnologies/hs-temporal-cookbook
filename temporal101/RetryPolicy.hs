@@ -44,6 +44,9 @@ trySometimesBusy = do
     -- | Throwing an ApplicationFailure fails the Activity. Temporal
     -- workflows are expected to be robust against activity failures,
     -- though, so by default this won't fail the Workflow's execution.
+    -- If we exceed the retry policy's attempt limit (see below) or flag
+    -- this failure as non-retryable, though, the Workflow will fail
+    -- when the Activity fails.
     errorOut status = throw 
       ApplicationFailure
         { type' = "DidntGet200Error"
