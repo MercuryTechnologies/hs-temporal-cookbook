@@ -1,0 +1,70 @@
+cabal-version: 3.0
+
+name:       temporal102
+version:    0.0.0
+license:    MPL-2.0
+build-type: Simple
+author:     Mercury Technologies Inc.
+maintainer: temporal@mercury.com
+copyright:  2025 Mercury Technologies Inc.
+
+common all
+  default-language: GHC2021
+  default-extensions:
+    BlockArguments,
+    DeriveAnyClass,
+    DerivingVia,
+    OverloadedRecordDot,
+    OverloadedStrings,
+    TemplateHaskell,
+    TypeFamilies,
+    UndecidableInstances,
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+    base,
+    bytestring,
+    aeson,
+    discover-instances,
+    http-conduit,
+    http-types,
+    monad-logger,
+    require-callstack,
+    scotty,
+    text,
+    temporal-sdk-core,
+    temporal-sdk,
+    transformers,
+    unliftio,
+    uuid,
+  hs-source-dirs: .
+
+common executables
+
+-- examples of how to set up little Cabal executable targets, taken from
+-- Temporal 101. let's fill these out for 102 exercises as we go.
+
+-- executable exercise1
+--   import: all
+--   main-is: Exercise1.hs
+--   other-modules: SayHello
+
+-- executable exercise2
+--   import: all
+--   main-is: Exercise2.hs
+--   other-modules: SayHello
+
+-- executable exercise3
+--   import: all
+--   main-is: Exercise3.hs
+
+-- executable helloserver
+--   import: all
+--   main-is: HelloServer.hs
+
+-- executable exercise4
+--   import: all
+--   main-is: Exercise4.hs
+
+-- executable retrypolicy
+--   import: all
+--   main-is: RetryPolicy.hs
