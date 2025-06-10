@@ -16,6 +16,7 @@ common all
     DerivingVia,
     OverloadedRecordDot,
     OverloadedStrings,
+    RecordWildCards,
     TemplateHaskell,
     TypeFamilies,
     UndecidableInstances,
@@ -33,6 +34,7 @@ common all
     text,
     temporal-sdk-core,
     temporal-sdk,
+    time,
     transformers,
     unliftio,
     uuid,
@@ -53,9 +55,9 @@ common executables
 --   main-is: Exercise2.hs
 --   other-modules: SayHello
 
--- executable exercise3
---   import: all
---   main-is: Exercise3.hs
+executable exercise3
+  import: all
+  main-is: Exercise3.hs
 
 -- executable helloserver
 --   import: all
