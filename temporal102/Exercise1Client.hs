@@ -54,7 +54,6 @@ main = do
       
     _ -> do
       putStrLn "Usage: exercise1-client <name> <language-code>"
-      putStrLn "Example: exercise1-client Anthony fr"
       putStrLn ""
       putStrLn "Supported language codes: fr, es, de, pt"
   where

@@ -46,13 +46,17 @@ common executables
 
 executable exercise1
   import: all
-  main-is: Exercise1Worker.hs
-  other-modules: Exercise1
+  main-is: Exercise1.hs
+  ghc-options: -main-is Exercise1.main
 
 executable exercise1-client
   import: all
   main-is: Exercise1Client.hs
   other-modules: Exercise1
+
+executable translation-service
+  import: all
+  main-is: TranslationService.hs
 
 -- executable exercise2
 --   import: all
