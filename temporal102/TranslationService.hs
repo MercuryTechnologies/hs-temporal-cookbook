@@ -5,7 +5,7 @@ import Control.Monad.IO.Class (liftIO)
 import Data.Text (Text)
 import Data.Text qualified as T
 import Data.Text.Lazy qualified as TL
-import Data.Text.IO.Utf8 qualified as T.IO  -- ← Add this import
+import Data.Text.IO.Utf8 qualified as T.IO
 import Network.HTTP.Types.Status
 import Web.Scotty
 import qualified Data.Map.Strict as Map
