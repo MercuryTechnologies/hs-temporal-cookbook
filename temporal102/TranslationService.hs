@@ -5,6 +5,7 @@ import Control.Monad.IO.Class (liftIO)
 import Data.Text (Text)
 import Data.Text qualified as T
 import Data.Text.Lazy qualified as TL
+import Data.Text.IO.Utf8 qualified as T.IO  -- ← Add this import
 import Network.HTTP.Types.Status
 import Web.Scotty
 import qualified Data.Map.Strict as Map
@@ -20,17 +21,34 @@ translations = Map.fromList
 
 main :: IO ()
 main = do
+  putStrLn "Starting Translation Service..."
+  putStrLn ""
+  putStrLn "Supported languages: fr, es, de, pt"
+  putStrLn ""
+  
   scotty 9001 $ do
     get "/translate/:term/:lang" $ do
       term <- pathParam "term"
       lang <- pathParam "lang"
       
-      liftIO $ putStrLn $ "Translating '" ++ T.unpack term ++ "' to " ++ T.unpack lang
+      liftIO . T.IO.putStrLn $ "Translating '" <> term <> "' to " <> lang
       
-      case Map.lookup lang translations >>= Map.lookup (T.toLower term) of
-        Just translation -> do
-          liftIO $ putStrLn $ "-> " ++ T.unpack translation
-          text $ TL.fromStrict translation
+      case Map.lookup lang translations of
         Nothing -> do
-          liftIO $ putStrLn $ "-> Translation not found,"
-          text $ TL.fromStrict term
+          liftIO . T.IO.putStrLn $ "-> Language '" <> lang <> "' not supported"
+          status status404
+          text $ "Language '" <> TL.fromStrict lang <> "' not supported. Available: fr, es, de, pt"
+          finish
+        Just termMap ->
+          case Map.lookup (T.toLower term) termMap of
+            Just translation -> do
+              liftIO . T.IO.putStrLn $ "-> " <> translation
+              text $ TL.fromStrict translation
+            Nothing -> do
+              liftIO . T.IO.putStrLn $ "-> Term '" <> term <> "' not found in " <> lang
+              status status404
+              text $ "Unable to translate '" <> TL.fromStrict term <> "' to '" <> TL.fromStrict lang <> "'. Available terms: hello, goodbye"
+              finish
+    
+    get "/health" $ do
+      text "Translation service is running"
