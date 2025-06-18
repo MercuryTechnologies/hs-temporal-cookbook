@@ -44,9 +44,9 @@ common executables
 executable client
   import: all
   main-is: Client.hs
-  -- other-modules: Workflow.hs
+  other-modules: Workflow
 
-executable ex3-worker
+executable worker
   import: all
   main-is: Worker.hs
-  -- other-modules: Workflow.hs
+  other-modules: Workflow
