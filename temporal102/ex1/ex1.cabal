@@ -1,6 +1,6 @@
 cabal-version: 3.0
 
-name:       ex3
+name:       ex1
 version:    0.0.0
 license:    MPL-2.0
 build-type: Simple
@@ -31,6 +31,7 @@ common all
     http-types,
     monad-logger,
     require-callstack,
+    scotty,
     text,
     temporal-sdk-core,
     temporal-sdk,
@@ -42,12 +43,16 @@ common all
 
 common executables
 
-executable client
+executable exercise1
   import: all
-  main-is: Client.hs
-  other-modules: Workflow
+  main-is: Exercise1.hs
+  ghc-options: -main-is Exercise1.main
 
-executable worker
+executable exercise1-client
   import: all
-  main-is: Worker.hs
-  other-modules: Workflow
+  main-is: Exercise1Client.hs
+  other-modules: Exercise1
+
+executable translation-service
+  import: all
+  main-is: TranslationService.hs
