@@ -1,6 +1,6 @@
 cabal-version: 3.0
 
-name:       temporal102
+name:       ex3
 version:    0.0.0
 license:    MPL-2.0
 build-type: Simple
@@ -30,7 +30,6 @@ common all
     http-types,
     monad-logger,
     require-callstack,
-    scotty,
     text,
     temporal-sdk-core,
     temporal-sdk,
@@ -42,31 +41,12 @@ common all
 
 common executables
 
--- examples of how to set up little Cabal executable targets, taken from
--- Temporal 101. let's fill these out for 102 exercises as we go.
-
--- executable exercise1
---   import: all
---   main-is: Exercise1.hs
---   other-modules: SayHello
-
--- executable exercise2
---   import: all
---   main-is: Exercise2.hs
---   other-modules: SayHello
-
-executable exercise3
+executable client
   import: all
-  main-is: Exercise3.hs
+  main-is: Client.hs
+  -- other-modules: Workflow.hs
 
--- executable helloserver
---   import: all
---   main-is: HelloServer.hs
-
--- executable exercise4
---   import: all
---   main-is: Exercise4.hs
-
--- executable retrypolicy
---   import: all
---   main-is: RetryPolicy.hs
+executable ex3-worker
+  import: all
+  main-is: Worker.hs
+  -- other-modules: Workflow.hs
