@@ -99,3 +99,59 @@ The workflow execution completes successfully despite the worker failure, demons
 ---
 
 This is the end of Exercise 1.
+
+---
+
+## Using Record Types Exercise
+
+In this exercise, you will:
+
+* Use Record Types for workflow and activity data
+
+This exercise demonstrates how **Record Types** are used in Temporal workflows.
+
+### Setup
+
+You'll need four terminal windows for this exercise.
+
+### Part A: Run Using Record Types Exercise
+
+#### Step 1: Start the Temporal Server
+```bash
+# Terminal 1
+$ temporal server start-dev
+```
+
+#### Step 2: Start the Translation Service
+```bash
+# Terminal 2
+$ cabal run temporal102:translation-service
+```
+
+#### Step 3: Start the Record Types Worker
+```bash
+# Terminal 3
+$ cabal run temporal102:using-record-types
+```
+
+#### Step 4: Execute the Workflow with New Languages
+```bash
+# Terminal 4
+$ cabal run temporal102:using-record-types-client Anthony es
+```
+
+**Available languages:**
+- `fr` (French), `es` (Spanish), `de` (German), `pt` (Portuguese)
+- `lv` (Latvian), `mi` (Maori), `sk` (Slovak), `tr` (Turkish), `zu` (Zulu)
+
+### Expected Results
+
+You should observe:
+- Structured input/output with clear field names
+- Same workflow behavior but with Record Type data modeling
+
+The workflow demonstrates how data modeling with record types are used in Temporal applications.
+
+---
+
+This is the end of the Using Record Types exercise.

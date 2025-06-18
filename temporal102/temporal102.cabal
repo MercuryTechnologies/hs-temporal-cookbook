@@ -58,6 +58,17 @@ executable translation-service
   import: all
   main-is: TranslationService.hs
 
+executable using-record-types
+  import: all
+  main-is: UsingRecordTypes.hs
+  other-modules: Exercise1
+  ghc-options: -main-is UsingRecordTypes.main
+
+executable using-record-types-client
+  import: all
+  main-is: UsingRecordTypesClient.hs
+  other-modules: Exercise1, UsingRecordTypes
+
 -- executable exercise2
 --   import: all
 --   main-is: Exercise2.hs
