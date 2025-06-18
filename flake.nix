@@ -68,7 +68,7 @@
     };
 
     hs-temporal-sdk = {
-      url = "github:MercuryTechnologies/hs-temporal-sdk";
+      url = "github:MercuryTechnologies/hs-temporal-sdk/jkachmar/mock-activity-environment";
       inputs = {
         # stubbed out to avoid bloating `flake.lock`
         devenv.follows = "";
