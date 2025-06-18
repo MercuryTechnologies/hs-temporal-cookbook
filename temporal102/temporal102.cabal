@@ -32,7 +32,6 @@ common all
     require-callstack,
     scotty,
     text,
-    text-io,
     temporal-sdk-core,
     temporal-sdk,
     transformers,

@@ -27,15 +27,16 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1748364505,
-        "narHash": "sha256-IFnBpJCLFOR3DkBgy379XJLmZpQiWEEIRjDjPRrSGHQ=",
+        "lastModified": 1750278136,
+        "narHash": "sha256-FW59KHXOXVskcEOEzhAogCOFhrl7+SmW9bDrWBGaU0A=",
         "owner": "MercuryTechnologies",
         "repo": "hs-temporal-sdk",
-        "rev": "781ae8e0e47b434400f580944403f2e024915299",
+        "rev": "b1f7ebf77db72b3f982dd112a159554ae4da4a33",
         "type": "github"
       },
       "original": {
         "owner": "MercuryTechnologies",
+        "ref": "jkachmar/mock-activity-environment",
         "repo": "hs-temporal-sdk",
         "type": "github"
       }
