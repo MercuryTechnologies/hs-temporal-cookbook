@@ -24,6 +24,7 @@ common all
     base,
     bytestring,
     aeson,
+    containers,
     discover-instances,
     http-conduit,
     http-types,
@@ -31,6 +32,7 @@ common all
     require-callstack,
     scotty,
     text,
+    text-io,
     temporal-sdk-core,
     temporal-sdk,
     transformers,
@@ -43,10 +45,19 @@ common executables
 -- examples of how to set up little Cabal executable targets, taken from
 -- Temporal 101. let's fill these out for 102 exercises as we go.
 
--- executable exercise1
---   import: all
---   main-is: Exercise1.hs
---   other-modules: SayHello
+executable exercise1
+  import: all
+  main-is: Exercise1.hs
+  ghc-options: -main-is Exercise1.main
+
+executable exercise1-client
+  import: all
+  main-is: Exercise1Client.hs
+  other-modules: Exercise1
+
+executable translation-service
+  import: all
+  main-is: TranslationService.hs
 
 -- executable exercise2
 --   import: all
@@ -68,3 +79,4 @@ common executables
 -- executable retrypolicy
 --   import: all
 --   main-is: RetryPolicy.hs
+
