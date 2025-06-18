@@ -70,3 +70,25 @@ Take a moment to switch to the Compact view, and if one of the rows in the table
 Click "Expand All" near the upper-right corner of this table. Do you find that this helps you to correlate Events related to the Activities and Timer?
 
 Since the Web UI remembers the current view, be sure to click "Collapse All" and switch back to the History view before continuing.
+
+## Part C: Finding an Activity Bug
+
+One of the pizza shop's franchise managers added a monthly special to
+the code at the last minute, offering a $5 discount on all orders over
+$30. (Note that the code tracks prices in cents, to avoid floating-point
+error in price computations.) The test order created by the Client only
+totals $27, not enough to qualify for the discount. Let's try it out:
+
+1. Edit the `Client.hs` file, which creates the test order
+2. Add a new pizza to the order: `Pizza "Medium, with extra cheese" 1300`
+3. Change the order number from `31337` to something else, to avoid
+   complications with duplicate workflow IDs
+4. Save your changes and close your editor
+5. Submit this pizza order by running the client: `cabal run ex3:client`
+
+You will notice that the workflow doesn't complete. Open the web UI at
+`localhost:8233` to see what has happened.
+
+## FIXME: the rest is predicated on activity tests working
+
+
