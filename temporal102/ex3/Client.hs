@@ -1,10 +1,10 @@
 module Main where
 
-import Control.Monad.IO.Class (liftIO)
+-- import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
 import Control.Monad.Trans.Reader (runReaderT)
-import Data.UUID qualified as UUID
-import Data.UUID.V4 qualified as UUID.V4
+-- import Data.UUID qualified as UUID
+-- import Data.UUID.V4 qualified as UUID.V4
 import RequireCallStack (RequireCallStack, provideCallStack)
 import System.IO (stdout)
 import Temporal.Client (mkWorkflowClientConfig, workflowClient)
@@ -27,14 +27,14 @@ namespace = "default"
 
 main :: IO ()
 main = bracket setup teardown $ \withClient -> do
-  workflowId <- WorkflowId . UUID.toText <$> liftIO UUID.V4.nextRandom
+  let workflowId = WorkflowId $ "pizza-workflow-order-" <> (tshow testPizzaOrder.poOrderNumber)
   _result <-
     withClient $
       Client.execute
         PizzaWorkflow
         workflowId
         (Client.startWorkflowOptions taskQueue)
-        buildTestPizzaOrder
+        testPizzaOrder
   pure ()
   where
     setup = do
@@ -48,8 +48,8 @@ main = bracket setup teardown $ \withClient -> do
 
     teardown _withClient = pure ()
 
-    buildTestPizzaOrder :: PizzaOrder
-    buildTestPizzaOrder =
+    testPizzaOrder :: PizzaOrder
+    testPizzaOrder =
       let address = CustomerAddress "701 Mission Street" "Apartment 9C"
           largeVeg = Pizza "Large, with mushrooms and onions" 1500
           smallPep = Pizza "Small, with pepperoni" 1200
