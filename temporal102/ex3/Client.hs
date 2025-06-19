@@ -1,10 +1,7 @@
 module Main where
 
--- import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
 import Control.Monad.Trans.Reader (runReaderT)
--- import Data.UUID qualified as UUID
--- import Data.UUID.V4 qualified as UUID.V4
 import RequireCallStack (RequireCallStack, provideCallStack)
 import System.IO (stdout)
 import Temporal.Client (mkWorkflowClientConfig, workflowClient)
