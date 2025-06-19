@@ -1,36 +1,19 @@
 module Workflow where
 
 import Control.Exception (throw)
-import Control.Monad (forever)
-import Control.Monad.IO.Class (liftIO)
-import Control.Monad.Logger (defaultOutput, runStdoutLoggingT)
-import Control.Monad.Trans.Reader (runReaderT)
 import Data.Aeson (FromJSON, ToJSON)
 import Data.Text (Text)
 import Data.Text qualified as T
 import Data.Text.Encoding (decodeUtf8)
-import Data.UUID qualified as UUID
-import Data.UUID.V4 qualified as UUID.V4
-import DiscoverInstances (discoverInstances)
 import GHC.Generics (Generic)
 import Network.HTTP.Simple (httpBS, getResponseBody, getResponseStatusCode, parseRequest)
-import RequireCallStack (RequireCallStack, provideCallStack)
-import System.IO (stdout)
+import RequireCallStack (provideCallStack)
 import Temporal.Activity (Activity)
-import Temporal.Client (mkWorkflowClientConfig, workflowClient)
-import Temporal.Client qualified as Client
-import Temporal.Core.Client (connectClient, defaultClientConfig)
 import Temporal.Duration (seconds)
 import Temporal.Exception (ApplicationFailure (..))
-import Temporal.Runtime (TelemetryOptions (..), initializeRuntime)
-import Temporal.TH (WorkflowFn, ActivityFn)
 import Temporal.TH qualified
-import Temporal.Worker (Worker, WorkerConfig, startWorker)
-import Temporal.Worker qualified as Worker
-import Temporal.Workflow (Workflow, WorkflowId (..))
+import Temporal.Workflow (Workflow)
 import Temporal.Workflow qualified as Workflow
-import UnliftIO.Concurrent (threadDelay)
-import UnliftIO.Exception (bracket)
 
 tshow :: Show a => a -> Text
 tshow = T.pack . show
