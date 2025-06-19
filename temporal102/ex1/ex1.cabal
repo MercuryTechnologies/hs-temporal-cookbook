@@ -1,6 +1,6 @@
 cabal-version: 3.0
 
-name:       temporal102
+name:       ex1
 version:    0.0.0
 license:    MPL-2.0
 build-type: Simple
@@ -16,6 +16,7 @@ common all
     DerivingVia,
     OverloadedRecordDot,
     OverloadedStrings,
+    RecordWildCards,
     TemplateHaskell,
     TypeFamilies,
     UndecidableInstances,
@@ -34,15 +35,13 @@ common all
     text,
     temporal-sdk-core,
     temporal-sdk,
+    time,
     transformers,
     unliftio,
     uuid,
   hs-source-dirs: .
 
 common executables
-
--- examples of how to set up little Cabal executable targets, taken from
--- Temporal 101. let's fill these out for 102 exercises as we go.
 
 executable exercise1
   import: all
@@ -57,25 +56,3 @@ executable exercise1-client
 executable translation-service
   import: all
   main-is: TranslationService.hs
-
--- executable exercise2
---   import: all
---   main-is: Exercise2.hs
---   other-modules: SayHello
-
--- executable exercise3
---   import: all
---   main-is: Exercise3.hs
-
--- executable helloserver
---   import: all
---   main-is: HelloServer.hs
-
--- executable exercise4
---   import: all
---   main-is: Exercise4.hs
-
--- executable retrypolicy
---   import: all
---   main-is: RetryPolicy.hs
-
