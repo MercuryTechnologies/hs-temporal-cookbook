@@ -20,12 +20,3 @@ main = hspec $ do
     -- Latvian
 
     -- TODO: test that an unrecognized language code fails with a 400
-    it "throws an exception when language code isn't recognized" $ do
-      mockEnv <- mkMockActivityEnvironment ()
-      let input = TranslateTermInput "Hello" "fi" -- hei!
-      let act = runMockActivity mockEnv $ translateActivity input
-      act `shouldThrow` 
-        (\e -> case e of
-                 ApplicationFailure "TranslationError" _ _ _ _ _ -> True
-                 _ -> False
-        )

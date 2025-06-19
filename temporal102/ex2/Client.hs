@@ -6,7 +6,6 @@ import Control.Monad.Trans.Reader (runReaderT)
 import Data.UUID qualified as UUID
 import Data.UUID.V4 qualified as UUID.V4
 import System.Environment
--- import Data.Text (Text)
 import qualified Data.Text as T
 import Temporal.Client (mkWorkflowClientConfig, workflowClient)
 import Temporal.Client qualified as Client
