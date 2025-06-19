@@ -56,3 +56,15 @@ executable worker
 executable service
   import: all
   main-is: TranslationService.hs
+
+test-suite spec
+  import: all
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules: Workflow
+  build-depends:
+    hspec,
+    hspec-expectations,
+    temporal-sdk-core,
+    temporal-sdk
+
