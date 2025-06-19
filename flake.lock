@@ -27,11 +27,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1750278136,
-        "narHash": "sha256-FW59KHXOXVskcEOEzhAogCOFhrl7+SmW9bDrWBGaU0A=",
+        "lastModified": 1750359251,
+        "narHash": "sha256-gWVvCAZ2mHPr/8p2mFFCEFjq4VbNooObY6z/UdJDXL0=",
         "owner": "MercuryTechnologies",
         "repo": "hs-temporal-sdk",
-        "rev": "b1f7ebf77db72b3f982dd112a159554ae4da4a33",
+        "rev": "06289136aa32976e56ebac9d3933404822891f41",
         "type": "github"
       },
       "original": {

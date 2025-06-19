@@ -31,15 +31,12 @@ import UnliftIO.Concurrent (threadDelay)
 import UnliftIO.Exception (bracket)
 import Workflow
 
--- | Task queue name
 taskQueue :: Workflow.TaskQueue
 taskQueue = "translation-tasks"
 
--- | Temporal namespace
 namespace :: Workflow.Namespace
 namespace = "default"
 
--- | Worker configuration
 workerConfig :: WorkerConfig ()
 workerConfig = provideCallStack $ Worker.configure environment definitions settings
   where
