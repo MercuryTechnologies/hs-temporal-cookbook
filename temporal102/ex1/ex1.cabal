@@ -43,16 +43,16 @@ common all
 
 common executables
 
-executable exercise1
+executable worker
   import: all
-  main-is: Exercise1.hs
-  ghc-options: -main-is Exercise1.main
+  main-is: Worker.hs
+  other-modules: Workflow
 
-executable exercise1-client
+executable client
   import: all
-  main-is: Exercise1Client.hs
-  other-modules: Exercise1
+  main-is: Client.hs
+  other-modules: Workflow
 
-executable translation-service
+executable service
   import: all
   main-is: TranslationService.hs
