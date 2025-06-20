@@ -32,7 +32,7 @@ You'll need five terminal windows for this exercise.
 
 ### Part A: Understanding the Code
 
-The `sayHelloGoodbyeWorkflow` in `Exercise1.hs` includes:
+The `sayHelloGoodbyeWorkflow` in `Workflow.hs` includes:
 
 1. **Two Activities**: Translation of "hello" and "goodbye" messages by calling an HTTP service
 2. **A 10-second Timer**: Provides a window to test worker failure recovery
@@ -52,24 +52,24 @@ $ temporal server start-dev
 #### Step 2: Start the Translation Service
 ```bash
 # Terminal 2
-$ cabal run temporal102:translation-service
+$ cabal run ex1:service
 ```
 
 #### Step 3: Start Two Workers
 ```bash
 # Terminal 3 - Worker 1
-$ cabal run temporal102:exercise1
+$ cabal run ex1:worker
 ```
 
 ```bash
 # Terminal 4 - Worker 2  
-$ cabal run temporal102:exercise1
+$ cabal run ex1:worker
 ```
 
 #### Step 4: Execute the Workflow
 ```bash
 # Terminal 5 - Client
-$ cabal run temporal102:exercise1-client <YourName> <language>
+$ cabal run ex1:client <YourName> <language>
 ```
 
 Replace `YourName` with your name and `language` with your preferred language code (`fr`, `es`, `de`, or `pt`).
