@@ -46,6 +46,7 @@
                     openjdk
                     ormolu
                     temporal-cli
+                    temporal-test-server
                   ];
                 };
             in
