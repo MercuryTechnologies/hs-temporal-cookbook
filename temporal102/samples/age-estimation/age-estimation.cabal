@@ -1,0 +1,73 @@
+cabal-version: 3.0
+
+name:       age-estimation
+version:    0.0.0
+license:    MPL-2.0
+build-type: Simple
+author:     Mercury Technologies Inc.
+maintainer: temporal@mercury.com
+copyright:  2025 Mercury Technologies Inc.
+
+common all
+  default-language: GHC2021
+  default-extensions:
+    BlockArguments,
+    DeriveAnyClass,
+    DerivingVia,
+    LambdaCase,
+    OverloadedRecordDot,
+    OverloadedStrings,
+    RecordWildCards,
+    TemplateHaskell,
+    TypeFamilies,
+    UndecidableInstances,
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+    base,
+    bytestring,
+    aeson,
+    containers,
+    crypton-connection,
+    data-default,
+    discover-instances,
+    http-conduit,
+    http-client,
+    http-client-tls,
+    http-types,
+    monad-logger,
+    mtl,
+    require-callstack,
+    text,
+    temporal-sdk-core,
+    temporal-sdk,
+    time,
+    tls,
+    transformers,
+    unliftio,
+    uuid,
+  hs-source-dirs: .
+
+common executables
+
+library
+  import: all
+  hs-source-dirs: ./
+  exposed-modules:
+    Shared,
+    Workflow
+
+executable client
+  import: all, executables
+  main-is: Client.hs
+  hs-source-dirs: ./
+  other-modules:
+    Shared,
+    Workflow
+
+executable worker
+  import: all, executables
+  main-is: Worker.hs
+  hs-source-dirs: ./
+  other-modules:
+    Shared,
+    Workflow
