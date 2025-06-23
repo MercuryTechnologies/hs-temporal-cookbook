@@ -71,3 +71,22 @@ executable worker
   other-modules:
     Shared,
     Workflow
+
+test-suite spec
+  import: all
+  type: exitcode-stdio-1.0
+  hs-source-dirs: tests
+  main-is: Spec.hs
+  other-modules:
+    -- System under test.
+    Shared,
+    Workflow,
+    -- Common testing functionality.
+    TestUtils,
+    -- Test implementation.
+    ActivitySpec,
+    WorkflowSpec,
+  build-depends:
+    directory,
+    hspec,
+    hspec-expectations
