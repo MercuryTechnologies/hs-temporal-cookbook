@@ -24,6 +24,7 @@
             inherit system;
             overlays = [
               inputs.hs-temporal-sdk.overlays.temporal-bridge
+              inputs.hs-temporal-sdk.overlays.temporal-test-server
               inputs.hs-temporal-sdk.overlays.haskell-development
             ];
           };
@@ -45,6 +46,7 @@
                     openjdk
                     ormolu
                     temporal-cli
+                    temporal-test-server
                   ];
                 };
             in
@@ -68,7 +70,7 @@
     };
 
     hs-temporal-sdk = {
-      url = "github:MercuryTechnologies/hs-temporal-sdk/jkachmar/mock-activity-environment";
+      url = "github:MercuryTechnologies/hs-temporal-sdk/time-skipping";
       inputs = {
         # stubbed out to avoid bloating `flake.lock`
         devenv.follows = "";

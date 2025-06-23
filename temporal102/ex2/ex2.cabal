@@ -63,8 +63,10 @@ test-suite spec
   main-is: Spec.hs
   other-modules: Workflow
   build-depends:
+    directory,
     hspec,
     hspec-expectations,
+    monad-logger,
     temporal-sdk-core,
     temporal-sdk
 
