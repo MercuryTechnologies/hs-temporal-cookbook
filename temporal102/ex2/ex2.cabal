@@ -60,8 +60,16 @@ executable service
 test-suite spec
   import: all
   type: exitcode-stdio-1.0
+  hs-source-dirs: tests
   main-is: Spec.hs
-  other-modules: Workflow
+  other-modules:
+    -- System under test.
+    Workflow,
+    -- Common testing functionality.
+    TestUtils,
+    -- Test implementation.
+    ActivitySpec,
+    WorkflowSpec,
   build-depends:
     directory,
     hspec,
