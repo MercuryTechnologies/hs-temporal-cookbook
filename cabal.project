@@ -1,1 +1,5 @@
-packages: */*.cabal, */*/*.cabal
+packages:
+  hello/,
+  temporal101/,
+  temporal102/*/,
+  temporal102/samples/*/

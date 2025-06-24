@@ -70,7 +70,7 @@
     };
 
     hs-temporal-sdk = {
-      url = "github:MercuryTechnologies/hs-temporal-sdk/time-skipping";
+      url = "github:MercuryTechnologies/hs-temporal-sdk";
       inputs = {
         # stubbed out to avoid bloating `flake.lock`
         devenv.follows = "";
