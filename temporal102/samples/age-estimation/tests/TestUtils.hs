@@ -21,6 +21,7 @@ import Temporal.EphemeralServer (
   )
 import Temporal.EphemeralServer qualified as EphemeralServer
 import Temporal.Runtime (TelemetryOptions(NoTelemetry), Runtime, initializeRuntime)
+import Temporal.Testing.MockActivityEnvironment (MockActivityEnvironment, mkMockActivityEnvironment)
 import Temporal.Worker (WorkerConfig)
 import qualified Temporal.Worker as Worker
 import qualified Temporal.Workflow as Workflow
@@ -51,7 +52,7 @@ withDevServer action = do
 -- Typically follows a call to set up an ephemeral server, such as
 -- 'withDevServer'.
 withWorker :: WorkerConfig env -> ActionWith Core.Client -> ActionWith Core.Client
-withWorker config action coreClient = do
+withWorker config action coreClient =
   bracket (Worker.startWorker coreClient config) Worker.shutdown \_ -> do
     action coreClient
 
@@ -63,6 +64,13 @@ withTestClient :: Workflow.Namespace -> ActionWith WorkflowClient -> ActionWith 
 withTestClient namespace action coreClient = do
   client <- workflowClient coreClient $ (mkWorkflowClientConfig namespace)
   action client
+
+-- | Construct a 'MockActivityEnvironment' that provides the
+-- 'globalRelaxedEMSManager' to activities under test.
+withMockActivityEnvironment :: (MockActivityEnvironment HTTP.Client.Manager -> IO a) -> IO a
+withMockActivityEnvironment action = do
+  env <- mkMockActivityEnvironment globalRelaxedEMSManager
+  action env
 
 -- | A global Tokio 'Runtime' scoped to the test process.
 globalRuntime :: Runtime
