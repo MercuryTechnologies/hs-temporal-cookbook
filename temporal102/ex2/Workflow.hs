@@ -1,6 +1,5 @@
 module Workflow where
 
-import Control.Exception (throw)
 import Data.Aeson (FromJSON, ToJSON)
 import Data.Text (Text)
 import Data.Text qualified as T
@@ -14,6 +13,7 @@ import Temporal.Exception (ApplicationFailure (..))
 import Temporal.TH qualified
 import Temporal.Workflow (Workflow)
 import Temporal.Workflow qualified as Workflow
+import UnliftIO.Exception (throwIO)
 
 tshow :: Show a => a -> Text
 tshow = T.pack . show
@@ -35,7 +35,7 @@ translateActivity TranslateTermInput{..} = do
     200 -> pure body
     _ -> reportTranslationError status body
   where
-    reportTranslationError err body = throw
+    reportTranslationError err body = throwIO
       ApplicationFailure
         { type' = "TranslationError"
         , message = "Status " <> tshow err <> ": " <> tshow body
