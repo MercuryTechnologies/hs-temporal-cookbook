@@ -15,11 +15,9 @@ spec = describe "translation activity" do
     let input = TranslateTermInput "Hello" "de"
     res <- runMockActivity mockEnv $ translateActivity input
     res `shouldBe` "hallo"
+  -- FIXME: Needs to be implemented (Part B)
   it "successfully translates 'goodbye' to Latvian" do
-    mockEnv <- mkMockActivityEnvironment ()
-    let input = TranslateTermInput "Goodbye" "lv"
-    res <- runMockActivity mockEnv $ translateActivity input
-    res `shouldBe` "ardievu"
-  -- FIXME: Needs to be implemented.
+    pending
+  -- FIXME: Needs to be implemented (Part C)
   it "fails to translate with bad language code" do
     pending

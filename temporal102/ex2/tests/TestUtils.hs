@@ -4,7 +4,8 @@ module TestUtils where
 
 import Control.Exception (bracket, throwIO)
 import qualified Data.Text as Text
-import Control.Monad.Logger (runStdoutLoggingT)
+-- import Control.Monad.Logger (runStdoutLoggingT)
+import Control.Monad.Logger (runStderrLoggingT)
 import System.Directory (findExecutable)
 import System.IO.Unsafe (unsafePerformIO)
 import Test.Hspec
@@ -41,7 +42,7 @@ withTimeSkippingServer action = do
       }
   withTestServer globalRuntime config \_server -> do
     let coreConfig = defaultClientConfig { targetUrl = "http://localhost:" <> (Text.pack . show $ port) }
-    coreClient <- runStdoutLoggingT $ connectClient globalRuntime coreConfig
+    coreClient <- runStderrLoggingT $ connectClient globalRuntime coreConfig
     action coreClient
 
 -- | Construct a 'Worker' connected to a server associated with the given

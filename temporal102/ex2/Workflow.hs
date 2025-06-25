@@ -75,7 +75,7 @@ sayHelloGoodbyeWorkflow input = provideCallStack $ do
   Workflow.sleep (seconds 10)
   
   goodbye <- Workflow.executeActivity TranslateActivity activityOptions $ TranslateTermInput "goodbye" input.languageCode
-  let goodbyeMsg = goodbye <> ", " <> input.name
+  let goodbyeMsg = hello <> ", " <> input.name
   
   pure $ TranslationOutput helloMsg goodbyeMsg
 

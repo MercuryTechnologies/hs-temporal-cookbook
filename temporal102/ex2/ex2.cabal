@@ -69,6 +69,7 @@ test-suite spec
     TestUtils,
     -- Test implementation.
     ActivitySpec,
+    -- MockWorkflowSpec,
     WorkflowSpec,
   build-depends:
     directory,
