@@ -36,7 +36,7 @@ data CustomerAddress = CustomerAddress
 data CustomerDistance = CustomerDistance
   { kilometers :: Int
   }
-  deriving stock (Generic, Show)
+  deriving stock (Eq, Generic, Show)
   deriving anyclass (FromJSON, ToJSON)
 
 -- | This is an arbitrary, but stable, "distance calculator" for a
