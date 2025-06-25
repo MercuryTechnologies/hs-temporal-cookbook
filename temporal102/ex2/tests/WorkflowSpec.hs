@@ -41,7 +41,7 @@ workflowSpec = describe "translation workflow" do
         "test"
         (Client.startWorkflowOptions taskQueue)
         (TranslationInput "Pierre" "fr")
-  pending
+    pending
 
 -- | Construct a 'WorkerConfig' that supports 'SayHelloGoodbyeWorkflow'.
 workerConfig :: WorkerConfig ()

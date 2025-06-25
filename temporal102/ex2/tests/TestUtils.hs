@@ -4,7 +4,6 @@ module TestUtils where
 
 import Control.Exception (bracket, throwIO)
 import qualified Data.Text as Text
--- import Control.Monad.Logger (runStdoutLoggingT)
 import Control.Monad.Logger (runStderrLoggingT)
 import System.Directory (findExecutable)
 import System.IO.Unsafe (unsafePerformIO)

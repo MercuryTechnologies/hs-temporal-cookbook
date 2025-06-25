@@ -28,33 +28,25 @@ main = do
   case args of
     [nameArg, langArg] -> do
       let input = TranslationInput (T.pack nameArg) (T.pack langArg)
+
+      client <- mkClient
       
-      bracket setup teardown $ \withClient -> do
-        workflowId <- WorkflowId . UUID.toText <$> liftIO UUID.V4.nextRandom
-        putStrLn $ "Starting workflow with ID: " ++ show workflowId
+      workflowId <- WorkflowId . UUID.toText <$> liftIO UUID.V4.nextRandom
+      putStrLn $ "Starting workflow with ID: " ++ show workflowId
+      
+      handle <- flip runReaderT client $
+        Client.start
+          SayHelloGoodbyeWorkflow
+          workflowId
+          (Client.startWorkflowOptions taskQueue)
+          input
         
-        -- Start the workflow without waiting for completion.
-        -- This demonstrates fire-and-forget workflow execution.
-        handle <- withClient
-          ( Client.start
-              (SayHelloGoodbyeWorkflow)
-              workflowId
-              (Client.startWorkflowOptions taskQueue)
-              input
-          )
-        
-        pure ()
+      pure ()
       
     _ -> do
       putStrLn "Must supply a name and language code as arguments"
   where
-    setup = do
+    mkClient = do
       runtime <- initializeRuntime NoTelemetry
       coreClient <- runStdoutLoggingT $ connectClient runtime defaultClientConfig
-      
-      client <- workflowClient coreClient (mkWorkflowClientConfig namespace)
-      let withClient action = runReaderT action client
-      
-      pure withClient
-    
-    teardown _withClient = pure ()
+      workflowClient coreClient (mkWorkflowClientConfig namespace)
