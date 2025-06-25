@@ -52,7 +52,7 @@ spec = aroundAll withTimeSkippingServer
 
 -- | Test the translation workflow using the time-skipping test server.
 workflowSpec :: SpecWith WorkflowClient
-workflowSpec = fdescribe "translation workflow" do
+workflowSpec = describe "translation workflow" do
   it "successfully completes French translation" \client -> do
     output <- flip runReaderT client do
       Client.execute
