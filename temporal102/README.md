@@ -12,7 +12,7 @@ For the exercises, make sure to enter a Nix shell whenever you're
 opening terminals to run various components:
 
 ```bash
-$ nix develop --allow-flake-config
+$ nix develop --accept-flake-config
 ```
 
 ## Hands-On Exercises
