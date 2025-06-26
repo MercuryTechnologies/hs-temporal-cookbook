@@ -1,4 +1,20 @@
-# Exercise 3
+# Temporal 102 exercises, in Haskell
+
+## Running the exercises
+
+As with other Temporal cookbook environments, you'll start a nix shell
+with `nix develop --accept-flake-config` in two terminals, one where you
+plan to run code and one where you'll run the Temporal server. In the
+latter, run:
+
+```bash
+$ temporal server start-dev
+```
+
+This will start a long-running control plane server that will execute
+workflows against workers you write.
+
+## Exercise 3: Debugging and Fixing an Activity Failure
 
 During this exercise, you will
 
@@ -7,7 +23,7 @@ During this exercise, you will
 - Diagnose and fix a latent bug in one of the Activity Definitions
 - Test, deploy, and verify the fix
 
-## Setup
+### Setup
 
 You'll need four terminals for this exercise, running in the nix
 development shell in the `temporal102/ex3` directory.
@@ -18,7 +34,7 @@ Start the Temporal server in one terminal:
 $ temporal server start-dev
 ```
 
-## Part A: Run the workflow
+### Part A: Run the workflow
 
 We'll start by running the workflow without looking at the code; we'll
 inspect it in the web UI.
@@ -35,7 +51,7 @@ Run the client in a third to start the Workflow:
 $ cabal run ex3:client
 ```
 
-## Part B: Inspect the workflow execution in the web UI
+### Part B: Inspect the workflow execution in the web UI
 
 Open the web UI at `localhost:8233` and find the detail page for the
 Workflow Execution you just ran, which has the Workflow Type
@@ -71,7 +87,7 @@ Click "Expand All" near the upper-right corner of this table. Do you find that t
 
 Since the Web UI remembers the current view, be sure to click "Collapse All" and switch back to the History view before continuing.
 
-## Part C: Finding an Activity Bug
+### Part C: Finding an Activity Bug
 
 One of the pizza shop's franchise managers added a monthly special to
 the code at the last minute, offering a $5 discount on all orders over
@@ -89,7 +105,7 @@ totals $27, not enough to qualify for the discount. Let's try it out:
 You will notice that the workflow doesn't complete. Keep it running, but
 open the web UI at `localhost:8233` to see what has happened.
 
-## Part D: Fixing the Activity Bug
+### Part D: Fixing the Activity Bug
 
 You should see that the `billCustomer` activity is failing with an error
 along the lines of "Order amount must be nonnegative". (You'll have to
@@ -106,7 +122,7 @@ bug, so let's fix the bug.
 5. Open `Workflow.hs` and fix the bug in `billCustomer`
 6. Run `cabal test` and watch the test pass.
 
-## Part E: Deploying and verifying the fix
+### Part E: Deploying and verifying the fix
 
 - Stop each worker with ctrl-C, then restart with `cabal run ex3:worker`
 - The maximum retry interval is 10 seconds, so you should quickly see a
