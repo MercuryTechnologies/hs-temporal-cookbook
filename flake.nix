@@ -63,6 +63,12 @@
               ghc98 = mkShell { ghcVersion = "ghc98"; };
               ghc910 = mkShell { };
               otel = mkShell {
+                extraEnv = {
+                  "OTEL_EXPORTER_OTLP_PROTOCOL" = "http/protobuf";
+                  "OTEL_EXPORTER_OTLP_ENDPOINT" = "http://localhost:4318";
+                  "OTEL_TRACES_EXPORTER" = "otlp";
+                  "OTEL_SERVICE_NAME" = "hs-temporal-cookbook";
+                };
                 extraPkgs = [pkgs.otel-desktop-viewer];
               };
             };

@@ -30,6 +30,8 @@ common all
     crypton-connection,
     data-default,
     discover-instances,
+    hs-opentelemetry-instrumentation-http-client,
+    hs-opentelemetry-sdk,
     http-conduit,
     http-client,
     http-client-tls,

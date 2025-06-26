@@ -10,7 +10,7 @@ import Data.Text qualified as Text
 import Data.Text.Encoding (encodeUtf8)
 import GHC.Generics (Generic)
 import Network.HTTP.Client qualified as HTTP.Client
-import Network.HTTP.Simple (
+import OpenTelemetry.Instrumentation.HttpClient.Simple (
     getResponseBody,
     httpJSON,
     parseRequest,
@@ -43,7 +43,7 @@ estimateAge name = do
   req <- parseRequest "https://api.agify.io/"
     <&> setRequestQueryString [("name", Just . encodeUtf8 $ name)]
     <&> setRequestManager manager
-  EstimatorResponse {age} <- httpJSON req <&> getResponseBody
+  EstimatorResponse {age} <- httpJSON mempty req <&> getResponseBody
   pure age
 
 -- Register the activity with Temporal's code generation
