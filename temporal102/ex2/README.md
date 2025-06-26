@@ -48,7 +48,7 @@ In another, run:
 $ cabal test
 ```
 
-(If the worker logs are annoying you, you can banish them with
+(If the worker logs are annoying you, you can banish them like so:)
 
 ```bash
 $ cabal test 2>/dev/null
