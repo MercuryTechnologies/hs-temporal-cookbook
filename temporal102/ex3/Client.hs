@@ -23,10 +23,13 @@ namespace :: Workflow.Namespace
 namespace = "default"
 
 main :: IO ()
-main = bracket setup teardown $ \withClient -> do
+main = do
+  client <- mkClient
+
   let workflowId = WorkflowId $ "pizza-workflow-order-" <> (tshow testPizzaOrder.poOrderNumber)
+
   _result <-
-    withClient $
+    flip runReaderT client $
       Client.execute
         PizzaWorkflow
         workflowId
@@ -34,16 +37,10 @@ main = bracket setup teardown $ \withClient -> do
         testPizzaOrder
   pure ()
   where
-    setup = do
+    mkClient = do
       runtime <- initializeRuntime NoTelemetry
       coreClient <- runStdoutLoggingT $ connectClient runtime defaultClientConfig
-
-      client <- workflowClient coreClient (mkWorkflowClientConfig namespace)
-      let withClient action = runReaderT action client
-
-      pure withClient
-
-    teardown _withClient = pure ()
+      workflowClient coreClient (mkWorkflowClientConfig namespace)
 
     testPizzaOrder :: PizzaOrder
     testPizzaOrder =
