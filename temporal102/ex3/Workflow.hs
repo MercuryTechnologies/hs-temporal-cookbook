@@ -18,6 +18,7 @@ import Temporal.TH qualified
 import Temporal.Workflow (Workflow, WorkflowId (..))
 import Temporal.Workflow qualified as StartActivityOptions (StartActivityOptions (..))
 import Temporal.Workflow qualified as Workflow
+import UnliftIO.Exception (throwIO)
 
 -- | utility we'll need, defining it here to avoid TH splice shenanigans
 tshow :: Show a => a -> Text
@@ -36,7 +37,7 @@ data CustomerAddress = CustomerAddress
 data CustomerDistance = CustomerDistance
   { kilometers :: Int
   }
-  deriving stock (Generic, Show)
+  deriving stock (Eq, Generic, Show)
   deriving anyclass (FromJSON, ToJSON)
 
 -- | This is an arbitrary, but stable, "distance calculator" for a
@@ -79,7 +80,7 @@ data OrderConfirmation = OrderConfirmation
 billCustomer :: PizzaOrder -> Activity () OrderConfirmation
 billCustomer order = do
   currtime <- liftIO getCurrentTime
-  pure . billOrder . applyMonthlySpecial $ confirmationFromOrder order currtime
+  billOrder . applyMonthlySpecial $ confirmationFromOrder order currtime
   where
     confirmationFromOrder :: PizzaOrder -> UTCTime -> OrderConfirmation
     confirmationFromOrder PizzaOrder{..} currtime =
@@ -89,19 +90,22 @@ billCustomer order = do
         , ocTimestamp = currtime
         , ocAmountCents = foldr (+) 0 $ fmap price poPizzas
         }
+        
     -- | Monthly special: Orders over $30 get $5 off!
     applyMonthlySpecial :: OrderConfirmation -> OrderConfirmation
     applyMonthlySpecial order@OrderConfirmation{..} =
       if ocAmountCents > 3000 then order { ocAmountCents = -500 } else order
 
-    billOrder :: OrderConfirmation -> OrderConfirmation
+    billOrder :: OrderConfirmation -> Activity () OrderConfirmation
     billOrder = validateOrder
-      -- | imagine there's some payment processing going on here, too
+      -- | imagine there's some payment processing going on here, too.
+      -- hence doing this in Activity () rather than as a pure function
       where
-        validateOrder :: OrderConfirmation -> OrderConfirmation
+        validateOrder :: OrderConfirmation -> Activity () OrderConfirmation
         validateOrder order@OrderConfirmation{..} =
-          if ocAmountCents < 0 then reportAmountError ocAmountCents else order
-        reportAmountError amount = throw
+          -- | imagine more complex validation...
+          if ocAmountCents < 0 then reportAmountError ocAmountCents else pure order
+        reportAmountError amount = liftIO $ throwIO
           ApplicationFailure
             { type' = "OrderAmountError"
             , message = "Order amount must be nonnegative, got " <> tshow amount

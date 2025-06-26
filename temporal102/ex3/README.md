@@ -86,9 +86,30 @@ totals $27, not enough to qualify for the discount. Let's try it out:
 4. Save your changes and close your editor
 5. Submit this pizza order by running the client: `cabal run ex3:client`
 
-You will notice that the workflow doesn't complete. Open the web UI at
-`localhost:8233` to see what has happened.
+You will notice that the workflow doesn't complete. Keep it running, but
+open the web UI at `localhost:8233` to see what has happened.
 
-## FIXME: the rest is predicated on activity tests working
+## Part D: Fixing the Activity Bug
 
+You should see that the `billCustomer` activity is failing with an error
+along the lines of "Order amount must be nonnegative". (You'll have to
+click into the retrying Activity to find the exception.) Temporal will
+keep retrying the Activity until you terminate the Workflow or fix the
+bug, so let's fix the bug.
 
+1. Run `cabal test`. You'll see that it passes.
+2. Open `tests/ActivitySpec.hs` and examine the existing test suite.
+3. Add a new test to exercise the new weekly special: namely, that
+   orders above $30 get a $5 discount.
+4. Rerun `cabal test`. It'll fail again because your test reproduces the
+   bug in the Activity.
+5. Open `Workflow.hs` and fix the bug in `billCustomer`
+6. Run `cabal test` and watch the test pass.
+
+## Part E: Deploying and verifying the fix
+
+- Stop each worker with ctrl-C, then restart with `cabal run ex3:worker`
+- The maximum retry interval is 10 seconds, so you should quickly see a
+  worker pick up the Activity Task and run it to completion.
+
+This is the end of the exercise.
