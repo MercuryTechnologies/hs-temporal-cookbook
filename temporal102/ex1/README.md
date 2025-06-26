@@ -1,7 +1,5 @@
 # Temporal 102 exercises, in Haskell
 
-(Once we've finished the exercises, this needs an introduction.)
-
 ## Running the exercises
 
 As with other Temporal cookbook environments, you'll start a nix shell
