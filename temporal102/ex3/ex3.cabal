@@ -68,6 +68,3 @@ test-suite spec
     directory,
     hspec,
     hspec-expectations,
-    monad-logger,
-    temporal-sdk-core,
-    temporal-sdk
