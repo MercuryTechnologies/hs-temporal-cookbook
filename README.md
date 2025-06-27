@@ -18,9 +18,9 @@ the Haskell adaptation of the [Temporal 101] and [Temporal 102] training courses
 - [Temporal 101](./temporal101/README.md)
 - [Temporal 102](./temporal102/README.md)
   - Hands-On Exercises
-    - [Exercise 1 - Durable Execution](./temporal102/ex1/README.md)
-    - [Exercise 2 - Testing Code](./temporal102/ex2/README.md)
-    - [Exercise 3 - Testing Code](./temporal102/ex3/README.md)
+    - [Exercise 1 - Observing Durable Execution](./temporal102/ex1/README.md)
+    - [Exercise 2 - Testing the Translation Workflow](./temporal102/ex2/README.md)
+    - [Exercise 3 - Debugging and Fixing an Activity Failure](./temporal102/ex3/README.md)
   - Examples for Self-Study
     - [Age Estimation](./temporal102/samples/age-estimation/README.md)
 

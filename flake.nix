@@ -52,7 +52,6 @@
                     ormolu
                     temporal-cli
                     temporal-test-server
-                   ];
                   ]) ++ extraPkgs;
                   env = extraEnv;
                 };
