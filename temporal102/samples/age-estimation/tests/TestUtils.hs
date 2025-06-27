@@ -31,7 +31,7 @@ import UnliftIO.Exception (bracket, throwIO)
 -- along with connected 'Core.Client', available within the scope of some
 -- function under test.
 --
--- Typically precedes a call to 'withTimeSkippingClient'.
+-- Typically precedes a call to 'withTestClient'.
 withDevServer :: (Core.Client -> IO a) -> IO a
 withDevServer action = do
   port <- getFreePort

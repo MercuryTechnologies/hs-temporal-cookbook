@@ -11,7 +11,7 @@ import Temporal.Testing.MockActivityEnvironment (MockActivityEnvironment, runMoc
 
 -- | Prepare a mock environment and provide it to the activities under test.
 spec :: Spec
-spec = aroundAll withMockActivityEnvironment $
+spec = around withMockActivityEnvironment $
   activitySpec
 
 -- | Test the age estimation activity in a mocked environment.
