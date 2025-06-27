@@ -26,35 +26,51 @@
               inputs.hs-temporal-sdk.overlays.temporal-bridge
               inputs.hs-temporal-sdk.overlays.temporal-test-server
               inputs.hs-temporal-sdk.overlays.haskell-development
+              # FIXME: Drop this once we update nixpkgs to a more recent
+              # 'unstable', which includes an updated 'otel-desktop-viewer'.
+              (final: prev: prev.lib.packagesFromDirectoryRecursive {
+                inherit (final) callPackage;
+                directory = ./nix;
+              })
             ];
           };
 
           devShells =
             let
               mkShell =
-                ghcVersion:
+                { ghcVersion ? "ghc910", extraPkgs ? [], extraEnv ? {}, ... }:
                 pkgs.haskell.packages.${ghcVersion}.shellFor {
                   name = "hs-temporal-cookbook";
                   packages = hpkgs: [
                     (hpkgs.callCabal2nix "hello" ./hello { })
                   ];
                   withHoogle = true;
-                  nativeBuildInputs = with pkgs; [
-                    act
+                  nativeBuildInputs = (with pkgs; [
                     cabal-install
                     ghcid
                     openjdk
                     ormolu
                     temporal-cli
                     temporal-test-server
-                  ];
+                   ];
+                  ]) ++ extraPkgs;
+                  env = extraEnv;
                 };
             in
             rec {
-              ghc96 = mkShell "ghc96";
-              ghc98 = mkShell "ghc98";
-              ghc910 = mkShell "ghc910";
               default = ghc910;
+              ghc96 = mkShell { ghcVersion = "ghc96"; };
+              ghc98 = mkShell { ghcVersion = "ghc98"; };
+              ghc910 = mkShell { };
+              otel = mkShell {
+                extraEnv = {
+                  "OTEL_EXPORTER_OTLP_PROTOCOL" = "http/protobuf";
+                  "OTEL_EXPORTER_OTLP_ENDPOINT" = "http://localhost:4318";
+                  "OTEL_TRACES_EXPORTER" = "otlp";
+                  "OTEL_SERVICE_NAME" = "hs-temporal-cookbook";
+                };
+                extraPkgs = [pkgs.otel-desktop-viewer];
+              };
             };
         };
     };

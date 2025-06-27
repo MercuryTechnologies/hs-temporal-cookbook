@@ -17,7 +17,7 @@ import Temporal.Worker (WorkerConfig)
 spec :: Spec
 spec =
   aroundAll withDevServer
-    . aroundAllWith (withWorker $ Shared.mkWorkerConfig globalRelaxedEMSManager)
+    . aroundAllWith (withWorker $ Shared.mkWorkerConfig mempty globalRelaxedEMSManager)
     . aroundAllWith (withTestClient Shared.namespace)
     $ workflowSpec
 

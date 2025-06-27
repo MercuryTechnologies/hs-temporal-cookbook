@@ -6,28 +6,32 @@ import Workflow ()
 import Control.Monad.Logger (defaultOutput)
 import Control.Monad.IO.Class (MonadIO)
 import Data.Default (def)
+import Data.Functor ((<&>))
 import DiscoverInstances (discoverInstances)
 import Network.Connection (settingClientSupported)
 import Network.HTTP.Client qualified as HTTP.Client
 import Network.HTTP.Client.TLS (mkManagerSettings, newTlsManagerWith)
 import qualified Network.TLS as TLS
+import OpenTelemetry.Trace (Tracer, getGlobalTracerProvider, makeTracer, tracerOptions)
 import RequireCallStack (RequireCallStack, provideCallStack)
 import System.IO (stdout)
+import Temporal.Interceptor (Interceptors)
 import Temporal.TH (WorkflowFn, ActivityFn)
 import Temporal.TH qualified
 import Temporal.Worker (WorkerConfig)
 import Temporal.Worker qualified as Worker
 import Temporal.Workflow qualified as Workflow
 
-mkWorkerConfig :: HTTP.Client.Manager -> WorkerConfig HTTP.Client.Manager
-mkWorkerConfig manager = provideCallStack $ Worker.configure manager definitions settings
+mkWorkerConfig :: forall env. env ~ HTTP.Client.Manager => Interceptors env -> env -> WorkerConfig env
+mkWorkerConfig interceptors manager = provideCallStack $ Worker.configure manager definitions settings
   where
-    definitions :: RequireCallStack => Worker.Definitions HTTP.Client.Manager
+    definitions :: RequireCallStack => Worker.Definitions env
     definitions = Temporal.TH.discoverDefinitions $$(discoverInstances) $$(discoverInstances)
     settings = do
       Worker.setNamespace namespace
       Worker.setTaskQueue taskQueue
       Worker.setLogger (defaultOutput stdout)
+      Worker.addInterceptors interceptors
 
 namespace :: Workflow.Namespace
 namespace = "default"
