@@ -2,6 +2,28 @@
 
 This is a set of examples for the [(unofficial) Haskell SDK](https://github.com/MercuryTechnologies/hs-temporal-sdk/).
 
+## Training
+
+This repository provides code used for exercises and demonstrations included in
+the Haskell adaptation of the [Temporal 101] and [Temporal 102] training courses.
+
+> [!IMPORTANT]
+> Keep in mind that the example code used in this course was designed to
+> support learning a specific aspect of Temporal, not to serve as a
+> ready-to-use template for implementing a production system.
+
+[Temporal 101]: https://learn.temporal.io/courses/temporal_101/
+[Temporal 102]: https://learn.temporal.io/courses/temporal_102/
+
+- [Temporal 101](./temporal101/README.md)
+- [Temporal 102](./temporal102/README.md)
+  - Hands-On Exercises
+    - [Exercise 1 - Durable Execution](./temporal102/ex1/README.md)
+    - [Exercise 2 - Testing Code](./temporal102/ex2/README.md)
+    - [Exercise 3 - Testing Code](./temporal102/ex3/README.md)
+  - Examples for Self-Study
+    - [Age Estimation](./temporal102/samples/age-estimation/README.md)
+
 ## Examples
 
 Most examples assume a Nix development shell and running Temporal development

@@ -54,6 +54,14 @@ calls (by way of [`OpenTelemetry.Instrumentation.HttpClient`]).
 We've included a separate Nix devshell that provides [`otel-desktop-viewer`]
 and some preset `OTEL_` environment variables so this can be observed locally.
 
+> [!WARNING]
+> There is a known bug where `temporal server start-dev` will start logging
+> error messages and can crash the `otel-desktop-viewer` when run in the
+> `.#otel` dev shell that has `OTEL_` environment variables set.
+>
+> To avoid this, make sure that your Temporal development server is running in
+> the standard Nix dev shell (i.e. `nix develop --accept-flake-config`).
+
 If it's still running from earlier, stop the Worker and exit the Nix dev shell.
 
 Launch the `otel-desktop-viewer`, this should automatically open your default
