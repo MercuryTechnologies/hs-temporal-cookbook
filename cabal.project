@@ -3,3 +3,12 @@ packages:
   temporal101/,
   temporal102/*/,
   temporal102/samples/*/
+
+-- FIXME: we should be able to reuse the precompiled package in our Nix
+-- environment, but there's some combination of package version constraints
+-- that prevents 'cabal' from selecting this so we need to build the library.
+--
+-- If we've got to build it, the least we can do is depend on the dylib so
+-- we don't have to pull in 'rustc', 'cargo', etc. to compile that from source.
+package temporal-sdk-core
+  flags: +external_lib
