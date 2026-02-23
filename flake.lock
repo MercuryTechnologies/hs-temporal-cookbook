@@ -1,5 +1,27 @@
 {
   "nodes": {
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "hs-temporal-sdk",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1771743970,
+        "narHash": "sha256-eri4eY0fUouYxBgWxJAJzG+xTGXVI7VeNJGcJrqpEt0=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "2af8ae8bbe91833a54bd3b9cc24c326b66972a8e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -7,11 +29,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1743550720,
-        "narHash": "sha256-hIshGgKZCgWh6AYJpJmRgFdR3WUbkY04o82X05xqQiY=",
+        "lastModified": 1769996383,
+        "narHash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "c621e8422220273271f52058f618c94e405bb0f5",
+        "rev": "57928607ea566b5db3ad13af0e57e921e6b12381",
         "type": "github"
       },
       "original": {
@@ -23,15 +45,16 @@
     "hs-temporal-sdk": {
       "inputs": {
         "devenv": [],
-        "fenix": [],
-        "nixpkgs": "nixpkgs"
+        "fenix": "fenix",
+        "nixpkgs": "nixpkgs",
+        "rust-overlay": []
       },
       "locked": {
-        "lastModified": 1750782581,
-        "narHash": "sha256-PQKc17F5c+RRl3UAPlG2zI1R/BaqcqZsJ3cl/ACJcCQ=",
+        "lastModified": 1770762329,
+        "narHash": "sha256-vDG6+9oXod0P0/ZY2PWR/evS88QJsWU79a4m873C+nc=",
         "owner": "MercuryTechnologies",
         "repo": "hs-temporal-sdk",
-        "rev": "918ada6e16c8271bc42e0f1f77470d9a1e543c22",
+        "rev": "86c9d166dbc95c6deb37235073639e15e20bc62d",
         "type": "github"
       },
       "original": {
@@ -58,12 +81,33 @@
     },
     "root": {
       "inputs": {
+        "fenix": [
+          "hs-temporal-sdk",
+          "fenix"
+        ],
         "flake-parts": "flake-parts",
         "hs-temporal-sdk": "hs-temporal-sdk",
         "nixpkgs": [
           "hs-temporal-sdk",
           "nixpkgs"
         ]
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771639390,
+        "narHash": "sha256-igbphgls7JmrblWCIbgBGcL/ZWj0Iv+InySvuhLC5Ew=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "af68fc6e782f218c262a8e7e5718ce7276f697a2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     }
   },

@@ -23,8 +23,9 @@
           _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
             overlays = [
-              inputs.hs-temporal-sdk.overlays.temporal-bridge
-              inputs.hs-temporal-sdk.overlays.temporal-test-server
+              inputs.fenix.overlays.default
+              inputs.hs-temporal-sdk.overlays.native
+              inputs.hs-temporal-sdk.overlays.development
               inputs.hs-temporal-sdk.overlays.haskell-development
               # FIXME: Drop this once we update nixpkgs to a more recent
               # 'unstable', which includes an updated 'otel-desktop-viewer'.
@@ -50,8 +51,10 @@
                     ghcid
                     openjdk
                     ormolu
+                    temporal_bridge
                     temporal-cli
                     temporal-test-server
+                    zlib.dev
                   ]) ++ extraPkgs;
                   env = extraEnv;
                 };
@@ -78,6 +81,8 @@
     # reference the package set used to build/test `hs-temporal-sdk` to avoid
     # rebuilding artifacts that have already been cached by upstream CI.
     nixpkgs.follows = "hs-temporal-sdk/nixpkgs";
+    # referencing the fenix overlay used in the 'hs-temporal-sdk' derivation.
+    fenix.follows = "hs-temporal-sdk/fenix";
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
@@ -89,7 +94,7 @@
       inputs = {
         # stubbed out to avoid bloating `flake.lock`
         devenv.follows = "";
-        fenix.follows = "";
+        rust-overlay.follows = "";
       };
     };
   };
